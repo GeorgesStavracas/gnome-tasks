@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application>
+  <id type="desktop">tasks.desktop</id>
+  <licence>CC0</licence>
+  <description>
+    <_p>
+      Task manager for GNOME desktop.
+    </_p>
+  </description>
+  <screenshots>
+    
+  </screenshots>
+  <url type="homepage">http://www.google.com</url>
+  <updatecontact>georges.stavracas_at_gmail.com</updatecontact>
+</application>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/apps/tasks/">
+    <file compressed="true" preprocess="xml-stripblanks">resources/window.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">resources/task_row.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">resources/list_row.ui</file>
+    <file compressed="true">resources/style.css</file>
+  </gresource>
+</gresources>

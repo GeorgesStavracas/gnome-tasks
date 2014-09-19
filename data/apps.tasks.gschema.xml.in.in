@@ -1,0 +1,33 @@
+<schemalist gettext-domain="@GETTEXT_PACKAGE@">
+    <schema id="apps.tasks" path="/apps/tasks/">
+        <key name="maximized" type="b">
+            <default>true</default>
+            <_summary>Window maximized</_summary>
+            <_description>Window maximized state</_description>
+        </key>
+        <key name="size" type="(ii)">
+            <default>(800,600)</default>
+            <_summary>Width and height of the window.</_summary>
+            <_description>
+                Width and height of the window last time it was closed. Width is >= 800 and height is >= 600.
+            </_description>
+        </key>
+        <key name="position" type="(ii)">
+            <default>(0,0)</default>
+            <_summary>Position of the window.</_summary>
+            <_description>
+                Position of the window last time it was closed.
+            </_description>
+        </key>
+    </schema>
+
+    <schema id="apps.tasks.plugins" path="/apps/tasks/plugins/">
+        <key name="active-plugins" type="as">
+            <default>[]</default>
+            <_summary>List of loaded plugins.</_summary>
+            <_description>
+                The list of active plugins when the app was last closed. Plugins should use it's uid, e.g. 'plugin@author.extension'.
+            </_description>
+        </key>
+    </schema>
+</schemalist>

@@ -1,0 +1,13 @@
+[Desktop Entry]
+_Name=Tasks
+_GenericName=Tasks
+_X-GNOME-FullName=Tasks
+_Comment=Task manager for GNOME
+_Keywords=tasks;todo;manager;
+Exec=tasks
+Icon=tasks
+Terminal=false
+Type=Application
+Categories=GNOME;GTK;Utility;
+StartupNotify=true
+X-GNOME-UsesNotifications=true

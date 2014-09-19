@@ -1,0 +1,13 @@
+GtkScrolledWindow {
+  border-width: 0px;
+}
+
+GtkScrolledWindow .scrollbar.trough {
+    background-color: transparent;
+    background-image: none;
+}
+
+.right-border {
+  border-right-width: 1px;
+}
+

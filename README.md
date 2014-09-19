@@ -32,5 +32,4 @@ are very welcome.
 
 - [x] Plugin system
 - [ ] Local data source
-- [ ] Local data source (plugin)
 - [ ] User Interface

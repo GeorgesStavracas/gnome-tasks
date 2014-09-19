@@ -29,9 +29,12 @@ public class Tasks.Application : Gtk.Application
 	
 	protected override void activate ()
 		{		
-        // Create the window of this application and show it
+        /* Create the window of this application and show it */
 				if (window == null)
 						window = new Tasks.Window(this);
+
+				/* Bind window settings */
+				Settings.configure_window (window);
 
 				window.present();
 		}
@@ -44,8 +47,8 @@ public class Tasks.Application : Gtk.Application
 
 		try
 		{
-			//var file = File.new_for_uri("resource:///apps/tasks/ui/style.css");
-			var file = File.new_for_path("/mnt/Data/Projetos/Faculdade/IC/Aplicativo/src/resources/style.css");
+			var file = File.new_for_uri("resource:///apps/tasks/resources/style.css");
+			//var file = File.new_for_path("/mnt/Data/Projetos/Faculdade/IC/Aplicativo/src/resources/style.css");
 
 	    // apply css to the screen
 			Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default(), 

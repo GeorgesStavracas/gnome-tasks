@@ -1,22 +1,29 @@
 <schemalist gettext-domain="@GETTEXT_PACKAGE@">
     <schema id="apps.tasks" path="/apps/tasks/">
-        <key name="maximized" type="b">
+        <key name="window-maximized" type="b">
             <default>true</default>
             <_summary>Window maximized</_summary>
             <_description>Window maximized state</_description>
         </key>
-        <key name="size" type="(ii)">
+        <key name="window-size" type="(ii)">
             <default>(800,600)</default>
             <_summary>Width and height of the window.</_summary>
             <_description>
                 Width and height of the window last time it was closed. Width is >= 800 and height is >= 600.
             </_description>
         </key>
-        <key name="position" type="(ii)">
+        <key name="window-position" type="(ii)">
             <default>(0,0)</default>
             <_summary>Position of the window.</_summary>
             <_description>
                 Position of the window last time it was closed.
+            </_description>
+        </key>
+        <key name="tasks-paned-position" type="i">
+            <default>200</default>
+            <_summary>Position of the tasks' view separator.</_summary>
+            <_description>
+                Position of the tasks' view separator.
             </_description>
         </key>
     </schema>

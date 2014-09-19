@@ -27,11 +27,17 @@ public class Window : Gtk.ApplicationWindow
   private Gtk.HeaderBar headerbar;
   [GtkChild]
   public Gtk.Stack stack1;
+  [GtkChild]
+  public Gtk.Overlay overlay;
+  [GtkChild]
+  public Gtk.Paned paned;
 
   private int current_view;
 
   public Window (Tasks.Application app) {
   	Object(application: app);
+  	
+  	overlay.show_all();
   }
 
   private void setup_gmenu() {

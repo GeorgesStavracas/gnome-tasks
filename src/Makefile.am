@@ -20,7 +20,10 @@ BUILT_SOURCES = tasks-resources.c
 VALA_SOURCES = \
     main.vala \
     tasks-application.vala \
+    tasks-list-row.vala \
     tasks-plugin-manager.vala \
+    tasks-settings.vala \
+    tasks-task-row.vala \
     tasks-window.vala
 
 tasks_SOURCES = \

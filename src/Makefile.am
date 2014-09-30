@@ -19,12 +19,19 @@ BUILT_SOURCES = tasks-resources.c
 # source code
 VALA_SOURCES = \
     main.vala \
-    tasks-application.vala \
-    tasks-list-row.vala \
-    tasks-plugin-manager.vala \
-    tasks-settings.vala \
-    tasks-task-row.vala \
-    tasks-window.vala
+    tasks-window.vala \
+    \
+    backend/tasks-application.vala \
+    backend/tasks-plugin-manager.vala \
+    backend/tasks-settings.vala \
+    backend/tasks-task.vala \
+    \
+    util/tasks-datetime.vala \
+    \
+    widgets/tasks-list-row.vala \
+    widgets/tasks-task-row.vala \
+    widgets/tasks-task-view.vala \
+    widgets/tasks-text-editor.vala
 
 tasks_SOURCES = \
     $(VALA_SOURCES) \

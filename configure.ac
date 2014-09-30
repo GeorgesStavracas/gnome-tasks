@@ -1,7 +1,7 @@
 dnl -*- mode: m4 -*-
 AC_PREREQ([2.67])
 AC_INIT([gnome-tasks],
-        [0.0.1],
+        [3.13.1],
         [https://github.com/GeorgesStavracas/gnome-tasks/issues],
         [gnome-tasks])
 
@@ -67,6 +67,7 @@ TASKS_PACKAGES=" \
     --pkg gobject-2.0 \
     --pkg gmodule-2.0 \
     --pkg glib-2.0 \
+    --pkg gee-0.8 \
     --pkg libpeas-1.0 \
     --pkg libpeas-gtk-1.0 \
     --pkg sqlite3"

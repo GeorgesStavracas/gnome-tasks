@@ -85,7 +85,7 @@ public class Tasks.Application : Gtk.Application
 	
 	private void load_plugins()
 	{
-		Tasks.PluginManager manager;
+		weak Tasks.PluginManager manager;
 
 		manager = Tasks.PluginManager.instance;
 

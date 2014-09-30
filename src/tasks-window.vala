@@ -24,23 +24,55 @@ namespace Tasks
 public class Window : Gtk.ApplicationWindow
 {
   [GtkChild]
-  private Gtk.HeaderBar headerbar;
-  [GtkChild]
-  public Gtk.Stack stack1;
-  [GtkChild]
   public Gtk.Overlay overlay;
   [GtkChild]
-  public Gtk.Paned paned;
-
-  private int current_view;
+  public Gtk.Paned tasks_paned;
+  [GtkChild]
+  public Gtk.ListBox tasks_list;
+  [GtkChild]
+  public Gtk.Button back_button;
+  [GtkChild]
+  public Gtk.Button new_task_button;
+  [GtkChild]
+  public Gtk.Stack stack1;
 
   public Window (Tasks.Application app) {
   	Object(application: app);
-  	
-  	overlay.show_all();
+
+  	overlay.show_all ();
+
+    setup_example_tasks ();
+    setup_signals ();
+  	setup_menu ();
   }
 
-  private void setup_gmenu() {
+  private void setup_signals ()
+  {
+    tasks_list.row_activated.connect (this.set_task);
+    back_button.clicked.connect (this.on_back_button_clicked);
+  }
+
+  private void setup_example_tasks ()
+  {
+    TaskRow row = new TaskRow ();
+    tasks_list.add (row);
+  }
+
+  private void set_task (GLib.Object? obj)
+  {
+    new_task_button.visible = false;
+    back_button.visible = true;
+    stack1.visible_child_name = "details";
+  }
+
+  private void on_back_button_clicked ()
+  {
+    new_task_button.visible = true;
+    back_button.visible = false;
+    stack1.visible_child_name = "tasks";
+  }
+
+  private void setup_menu () {
 		var preferences = new GLib.SimpleAction("preferences", null);
   	var about = new GLib.SimpleAction("about", null);
   	
@@ -95,7 +127,7 @@ public class Window : Gtk.ApplicationWindow
 	  dialog.program_name = _("Tasks");
 	  dialog.comments = _("Manage your creativity, the modular way.");
 	  dialog.copyright = _("Copyright \xc2\xa9 2012-2014 The Tasks Project authors\n");
-	  dialog.version = "0.0.1";
+	  dialog.version = "3.13.1";
 	  dialog.license_type = Gtk.License.GPL_3_0;
 	  dialog.wrap_license = true;
 	  dialog.website = "https://github.com/GeorgesStavracas/Tasks";
@@ -103,7 +135,7 @@ public class Window : Gtk.ApplicationWindow
 
 		try
 		{
-			dialog.logo = new Gdk.Pixbuf.from_resource("/apps/Tasks/resources/icon.png");
+			dialog.logo = new Gdk.Pixbuf.from_resource("/apps/tasks/resources/icon.png");
 		}
 		catch (GLib.Error e)
 		{

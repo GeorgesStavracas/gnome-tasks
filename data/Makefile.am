@@ -14,8 +14,8 @@ appdata_DATA = tasks.appdata.xml
 
 icondir = $(datadir)/icons
 icon_DATA = \
-    icons/icon.png \
-    icons/icon.svg
+    icons/icon2.svg \
+    icons/task-list-symbolic.svg
 
 gsettingsschema_in_files = apps.tasks.gschema.xml.in
 gsettings_SCHEMAS = $(gsettingsschema_in_files:.xml.in=.xml)

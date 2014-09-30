@@ -24,8 +24,8 @@ along with .  If not, see <http://www.gnu.org/licenses/>.
   <!-- interface-css-provider-path style.css -->
   <!-- interface-license-type lgplv3 -->
   <template class="TasksWindow" parent="GtkApplicationWindow">
-    <property name="width_request">400</property>
-    <property name="height_request">300</property>
+    <property name="width_request">600</property>
+    <property name="height_request">450</property>
     <property name="can_focus">False</property>
     <child>
       <object class="GtkOverlay" id="overlay">
@@ -44,11 +44,12 @@ along with .  If not, see <http://www.gnu.org/licenses/>.
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
-                <property name="transition_type">over-up-down</property>
+                <property name="transition_duration">400</property>
+                <property name="transition_type">slide-left-right</property>
                 <child>
-                  <object class="GtkPaned" id="paned">
+                  <object class="GtkPaned" id="tasks_paned">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can_focus">True</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <property name="position">150</property>
@@ -72,6 +73,9 @@ along with .  If not, see <http://www.gnu.org/licenses/>.
                                   <object class="GtkListBox" id="lists_listbox">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <style>
+                                      <class name="fixed-list"/>
+                                    </style>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
@@ -82,10 +86,10 @@ along with .  If not, see <http://www.gnu.org/licenses/>.
                                   <object class="GtkLabel" id="label2">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="margin_left">5</property>
-                                    <property name="margin_right">5</property>
-                                    <property name="margin_top">2</property>
-                                    <property name="margin_bottom">2</property>
+                                    <property name="margin_start">5</property>
+                                    <property name="margin_end">5</property>
+                                    <property name="margin_top">10</property>
+                                    <property name="margin_bottom">5</property>
                                     <property name="xalign">0</property>
                                     <property name="label" translatable="yes">&lt;b&gt;Tags&lt;/b&gt;</property>
                                     <property name="use_markup">True</property>
@@ -99,6 +103,9 @@ along with .  If not, see <http://www.gnu.org/licenses/>.
                                   <object class="GtkListBox" id="tags_list">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <style>
+                                      <class name="fixed-list"/>
+                                    </style>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
@@ -161,23 +168,21 @@ along with .  If not, see <http://www.gnu.org/licenses/>.
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
                         <property name="window_placement">bottom-left</property>
-                        <property name="shadow_type">in</property>
+                        <property name="shadow_type">none</property>
                         <child>
                           <object class="GtkViewport" id="viewport2">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <object class="GtkListBox" id="tasks_listbox">
+                              <object class="GtkListBox" id="tasks_list">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
+                                <property name="selection_mode">none</property>
                               </object>
                             </child>
                           </object>
                         </child>
-                        <style>
-                          <class name="left-border"/>
-                        </style>
                       </object>
                       <packing>
                         <property name="resize">True</property>
@@ -185,9 +190,19 @@ along with .  If not, see <http://www.gnu.org/licenses/>.
                       </packing>
                     </child>
                   </object>
+                  <packing>
+                    <property name="name">tasks</property>
+                  </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="TasksTaskView" id="task_view">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                  </object>
+                  <packing>
+                    <property name="name">details</property>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </object>
               <packing>
@@ -212,13 +227,7 @@ along with .  If not, see <http://www.gnu.org/licenses/>.
               </packing>
             </child>
             <child>
-              <object class="GtkSearchBar" id="searchbar">
-            <property name="visible">True</property>
-          </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">0</property>
-              </packing>
+              <placeholder/>
             </child>
           </object>
         </child>
@@ -228,10 +237,11 @@ along with .  If not, see <http://www.gnu.org/licenses/>.
       <object class="GtkHeaderBar" id="headerbar">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="title">Tasks</property>
         <property name="spacing">12</property>
         <property name="show_close_button">True</property>
         <child>
-          <object class="GtkButton" id="create_button">
+          <object class="GtkButton" id="new_task_button">
             <property name="label" translatable="yes">New Task</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
@@ -239,6 +249,20 @@ along with .  If not, see <http://www.gnu.org/licenses/>.
             <style>
               <class name="suggested-action"/>
             </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="back_button">
+            <property name="visible">False</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <child>
+              <object class="GtkImage" id="back_image">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="icon_name">go-previous-symbolic</property>
+              </object>
+            </child>
           </object>
         </child>
         <child>

@@ -4,11 +4,10 @@
 GNOME Tasks is a powerful task manager built upon GNOME technologies. It aims to be a simple task manager,
 with the following features:
 
-* Tasks & projects management
+* Simple but powerful task management
 * Subtasks support
 * Advanced markdown-style description editor
-* Gantt diagram for projects
-
+* Lists & Tags support
 
 ## System Requirements
 
@@ -17,6 +16,7 @@ GNOME Tasks should build on most GNOME environments. It's dependencies are:
 * GLib >= 2.36
 * Gtk+ >= 3.11.9
 * Sqlite3
+* Peas & PeasGtk
 
 
 ## Development

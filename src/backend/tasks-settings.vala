@@ -41,7 +41,7 @@ public class Settings : GLib.Object
     {
       window_ = value;
 
-      settings.bind("tasks-paned-position", value.paned, "position", GLib.SettingsBindFlags.DEFAULT);
+      settings.bind("tasks-paned-position", value.tasks_paned, "position", GLib.SettingsBindFlags.DEFAULT);
       
       value.configure_event.connect( (event) =>
       {

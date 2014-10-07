@@ -24,6 +24,7 @@ public class BaseObject : GLib.Object
 {
   public int id {get; set;}
   public string name {get; set;}
+  public DataSource? source {get; set; default = null;}
 }
 
 }

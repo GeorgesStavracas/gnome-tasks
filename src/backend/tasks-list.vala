@@ -26,10 +26,11 @@ public class List : Tasks.BaseObject
 
   public FilterFunc filter = default_filter;
 
-  public List (int id, string name)
+  public List (int id = -1, string name = "", DataSource? source = null)
   {
     this.id = id;
     this.name = name;
+    this.source = source;
   }
 
   protected bool default_filter (Task task)

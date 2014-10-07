@@ -24,10 +24,11 @@ public class Tag : Tasks.BaseObject
 {
   public Gdk.RGBA color {get; set;}
 
-  public Tag (int id, string name)
+  public Tag (int id = -1, string name = "", DataSource? source = null)
   {
     this.id = id;
     this.name = name;
+    this.source = source;
   }
 }
 

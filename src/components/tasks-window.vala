@@ -72,7 +72,7 @@ public class Window : Gtk.ApplicationWindow
     tasks_list.add (row);
   }
 
-  private void set_task (GLib.Object? obj)
+  private void set_task (Gtk.ListBoxRow? obj)
   {
     new_task_button.visible = false;
     back_button.visible = true;

@@ -28,6 +28,8 @@ VALA_SOURCES = \
     backend/tasks-tag.vala \
     backend/tasks-task.vala \
     \
+    backend/local-source/tasks-local-source.vala \
+    \
     util/tasks-datetime.vala \
     \
     components/tasks-list-row.vala \

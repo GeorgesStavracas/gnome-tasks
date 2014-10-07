@@ -28,10 +28,11 @@ public class Task : Tasks.BaseObject
   public unowned Tasks.Task? parent {get; set; default=null;}
   public Tasks.DateTime due {get; set;}
 
-  public Task (int id, string name)
+  public Task (int id = -1, string name = "", DataSource? source = null)
   {
     this.id = id;
     this.name = name;
+    this.source = source;
   }
 }
 

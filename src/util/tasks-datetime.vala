@@ -22,7 +22,7 @@ namespace Tasks
 
 public class DateTime : GLib.Object
 {
-  protected GLib.DateTime base_time;
+  private GLib.DateTime base_time;
 
   public GLib.TimeZone timezone {get; set;}
 

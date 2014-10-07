@@ -11,6 +11,6 @@
   </gresource>
 
   <gresource prefix="/apps/tasks/">
-    <file compressed="true">resources/sql/base.sql</file>
+    <file compressed="true">resources/sql/schema.sql</file>
   </gresource>
 </gresources>

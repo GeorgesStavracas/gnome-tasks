@@ -25,25 +25,41 @@ public class Manager : GLib.Object
   public signal void sync_start ();
   public signal void sync_end ();
   public signal void register_list (List l);
+  public signal void source_registered (DataSource source);
+
+  public Gee.LinkedList<DataSource> sources {get; private set;}
 
 	/* Singleton section */
   private static Manager instance_ = null;
-	public static Manager instance
-	{
-		public get
-		{
-			if (instance_ == null)
-				instance_ = new Manager ();
-			return instance_;
-		}
-	}
+  public static Manager instance
+  {
+    public get
+    {
+      if (instance_ == null)
+        instance_ = new Manager ();
+      return instance_;
+    }
+  }
 
-	private Manager ()
-	{}
+  private Manager ()
+  {
+    sources = new Gee.LinkedList<DataSource> ();
+
+    /* Local source is the default embedded source */
+    LocalSource source = new LocalSource ();
+    this.register_source (source);
+  }
+
+	public void register_source (DataSource source)
+	{
+    sources.add (source);
+    source_registered (source);
+    source.init ();
+  }
 
 	public void register_default_lists ()
 	{
-	  List all, done, overdue;
+    List all, done, overdue;
 
 	  all = new List (-1, _("All"));
 	  all.filter = (t) => {
@@ -55,9 +71,14 @@ public class Manager : GLib.Object
 	    return t.done;
 	  };
 
-	  overdue = new List (-1, _("Overdone"));
+	  overdue = new List (-1, _("Overdue"));
+	  done.filter = (t) => {
+	    /* TODO: return true to overdone tasks */;
+	    return false;
+	  };
 
 	  register_list (all);
+	  register_list (overdue);
 	  register_list (done);
 	}
 }

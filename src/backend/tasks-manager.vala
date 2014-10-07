@@ -39,21 +39,19 @@ public class Manager : GLib.Object
 	}
 
 	private Manager ()
-	{
-		
-	}
+	{}
 
-	private void register_default_lists ()
+	public void register_default_lists ()
 	{
 	  List all, done, overdue;
 
 	  all = new List (-1, _("All"));
-	  all.filter_func = (t) => {
+	  all.filter = (t) => {
 	    return true;
 	  };
 
 	  done = new List (-1, _("Done"));
-	  done.filter_func = (t) => {
+	  done.filter = (t) => {
 	    return t.done;
 	  };
 

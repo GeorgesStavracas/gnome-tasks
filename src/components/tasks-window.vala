@@ -30,6 +30,8 @@ public class Window : Gtk.ApplicationWindow
   [GtkChild]
   public Gtk.ListBox tasks_list;
   [GtkChild]
+  public Gtk.ListBox lists_listbox;
+  [GtkChild]
   public Gtk.Button back_button;
   [GtkChild]
   public Gtk.Button new_task_button;
@@ -47,17 +49,26 @@ public class Window : Gtk.ApplicationWindow
     setup_example_tasks ();
     setup_signals ();
   	setup_menu ();
+
+  	Manager.instance.register_default_lists ();
   }
 
   private void setup_signals ()
   {
+    Manager manager;
+
+    manager = Manager.instance;
+    manager.register_list.connect (this.add_list);
+
     tasks_list.row_activated.connect (this.set_task);
     back_button.clicked.connect (this.on_back_button_clicked);
   }
 
   private void setup_example_tasks ()
   {
-    TaskRow row = new TaskRow ();
+    TaskRow row;
+
+    row = new TaskRow ();
     tasks_list.add (row);
   }
 
@@ -86,6 +97,15 @@ public class Window : Gtk.ApplicationWindow
 	  preferences.activate.connect (on_preferences_activate);
 	  this.add_action(about);
 	  this.add_action(preferences);
+  }
+
+  public void add_list (List l)
+  {
+    ListRow row;
+
+    row = new ListRow (l);
+    row.show_all ();
+    lists_listbox.add (row);
   }
 
   /* Show preferences dialog */

@@ -22,7 +22,9 @@ namespace Tasks
 
 public class List : Tasks.BaseObject
 {
-  public delegate bool filter_func (Task task);
+  public delegate bool FilterFunc (Task task);
+
+  public FilterFunc filter = default_filter;
 
   public List (int id, string name)
   {
@@ -32,7 +34,7 @@ public class List : Tasks.BaseObject
 
   protected bool default_filter (Task task)
   {
-    return (task.list_id == this.id);
+    return (task.list_id == this.id) && (!task.done);
   }
 }
 

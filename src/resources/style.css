@@ -23,3 +23,8 @@ GtkScrolledWindow .scrollbar.trough {
 .bottom-border {
   border-width: 0px 0px 1px 0px;
 }
+
+.counter-label {
+  font-size: small;
+  opacity: 0.75;
+}

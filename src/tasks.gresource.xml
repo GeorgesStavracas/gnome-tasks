@@ -8,4 +8,8 @@
     <file compressed="true" preprocess="xml-stripblanks">resources/task_view.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">resources/window.ui</file>
   </gresource>
+
+  <gresource prefix="/apps/tasks/">
+    <file compressed="true">resources/sql/base.sql</file>
+  </gresource>
 </gresources>

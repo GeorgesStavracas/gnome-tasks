@@ -1,6 +1,4 @@
 AM_CPPFLAGS = \
-  -I$(top_builddir)/libtasks \
-	-I$(top_srcdir)/libtasks \
 	-I$(srcdir) \
 	-DGNOME_DESKTOP_USE_UNSTABLE_API \
 	-DGETTEXT_PACKAGE=\""$(GETTEXT_PACKAGE)"\" \
@@ -19,7 +17,6 @@ BUILT_SOURCES = tasks-resources.c
 # source code
 VALA_SOURCES = \
     main.vala \
-    tasks-window.vala \
     \
     backend/tasks-application.vala \
     backend/tasks-plugin-manager.vala \
@@ -28,10 +25,11 @@ VALA_SOURCES = \
     \
     util/tasks-datetime.vala \
     \
-    widgets/tasks-list-row.vala \
-    widgets/tasks-task-row.vala \
-    widgets/tasks-task-view.vala \
-    widgets/tasks-text-editor.vala
+    components/tasks-list-row.vala \
+    components/tasks-task-row.vala \
+    components/tasks-task-view.vala \
+    components/tasks-text-editor.vala \
+    components/tasks-window.vala
 
 tasks_SOURCES = \
     $(VALA_SOURCES) \

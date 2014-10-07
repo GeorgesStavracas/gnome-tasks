@@ -5,6 +5,7 @@ GtkScrolledWindow .scrollbar.trough {
 
 .top-toolbar {
   border-width: 0px 0px 1px 0px;
+  border-radius: 0px;
 }
 
 .top-toolbar > GtkToolItem > GtkSpinBox > GtkButton {

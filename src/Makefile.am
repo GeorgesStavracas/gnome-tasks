@@ -19,6 +19,10 @@ VALA_SOURCES = \
     main.vala \
     \
     backend/tasks-application.vala \
+    backend/tasks-base-object.vala \
+    backend/tasks-data-source.vala \
+    backend/tasks-list.vala \
+    backend/tasks-manager.vala \
     backend/tasks-plugin-manager.vala \
     backend/tasks-settings.vala \
     backend/tasks-task.vala \

@@ -1,6 +1,6 @@
 /* -*- Mode: Vala; indent-tabs-mode: c; c-basic-offset: 2; tab-width: 2 -*-  */
 /*
- * tasks-task.c
+ * tasks-list.c
  * Copyright (C) 2014 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  * 
  * Tasks is free software: you can redistribute it and/or modify it
@@ -20,16 +20,19 @@
 namespace Tasks
 {
 
-public class Task : GLib.Object
+public class List : Tasks.BaseObject
 {
-  public int list_id {get; set;}
-  public string? description {get; set; default="";}
-  public unowned Tasks.Task? parent {get; set; default=null;}
-  public Tasks.DateTime due {get; set;}
+  public delegate bool filter_func (Task task);
 
-  public Task (string name)
+  public List (int id, string name)
   {
+    this.id = id;
     this.name = name;
+  }
+
+  protected bool default_filter (Task task)
+  {
+    return (task.list_id == this.id);
   }
 }
 

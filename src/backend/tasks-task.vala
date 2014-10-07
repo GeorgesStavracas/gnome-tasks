@@ -20,15 +20,17 @@
 namespace Tasks
 {
 
-public class Task : GLib.Object
+public class Task : Tasks.BaseObject
 {
   public int list_id {get; set;}
   public string? description {get; set; default="";}
+  public bool done {get; set; default=false;}
   public unowned Tasks.Task? parent {get; set; default=null;}
   public Tasks.DateTime due {get; set;}
 
-  public Task (string name)
+  public Task (int id, string name)
   {
+    this.id = id;
     this.name = name;
   }
 }

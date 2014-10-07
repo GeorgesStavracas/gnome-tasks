@@ -36,8 +36,11 @@ public class Window : Gtk.ApplicationWindow
   [GtkChild]
   public Gtk.Stack stack1;
 
+  protected unowned Tasks.Application app;
+
   public Window (Tasks.Application app) {
   	Object(application: app);
+  	this.app = app;
 
   	overlay.show_all ();
 
@@ -88,17 +91,11 @@ public class Window : Gtk.ApplicationWindow
   /* Show preferences dialog */
   private void on_preferences_activate ()
   {
-    /*
 		Tasks.PreferencesDialog dialog;
 
-		dialog = new Tasks.PreferencesDialog ();
-
+		dialog = new Tasks.PreferencesDialog (this.app);
 		dialog.transient_for = this;
-	  dialog.modal = true;
-	  dialog.destroy_with_parent = true;
-
 		dialog.present ();
-		*/
   }
 
   // About button

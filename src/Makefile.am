@@ -26,6 +26,7 @@ VALA_SOURCES = \
     util/tasks-datetime.vala \
     \
     components/tasks-list-row.vala \
+    components/tasks-preferences-dialog.vala \
     components/tasks-task-row.vala \
     components/tasks-task-view.vala \
     components/tasks-text-editor.vala \

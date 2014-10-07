@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/apps/tasks/">
-    <file compressed="true" preprocess="xml-stripblanks">resources/editor.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">resources/list_row.ui</file>
+    <file compressed="true">resources/editor.ui</file>
+    <file compressed="true">resources/list_row.ui</file>
+    <file compressed="true">resources/preferences.ui</file>
     <file compressed="true">resources/style.css</file>
-    <file compressed="true" preprocess="xml-stripblanks">resources/task_row.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">resources/task_view.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">resources/window.ui</file>
+    <file compressed="true">resources/task_row.ui</file>
+    <file compressed="true">resources/task_view.ui</file>
+    <file compressed="true">resources/window.ui</file>
   </gresource>
 
   <gresource prefix="/apps/tasks/">

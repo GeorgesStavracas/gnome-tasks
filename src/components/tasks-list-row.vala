@@ -23,8 +23,33 @@ namespace Tasks
 [GtkTemplate (ui = "/apps/tasks/resources/list_row.ui")]
 public class ListRow : Gtk.ListBoxRow
 {
-  public ListRow () {
-  	
+  [GtkChild]
+  private Gtk.Label _name;
+  [GtkChild]
+  private Gtk.Frame _color;
+  [GtkChild]
+  private Gtk.Frame _counter_frame;
+
+  /* Properties */
+  public unowned List list_;
+  public unowned List list
+  {
+    public get{return this.list_;}
+    private set
+    {
+      this.list_ = value;
+      this.name = value.name;
+    }
+  }
+  public new string name
+  {
+    get {return _name.label;}
+    private set {_name.label = value;}
+  }
+
+  public ListRow (List l)
+  {
+  	this.list = l;
   }
 }
 

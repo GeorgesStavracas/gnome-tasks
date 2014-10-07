@@ -31,7 +31,7 @@ public interface DataSource : GLib.Object
   public abstract int count_tasks (List? l = null);
   //public abstract int count_tasks_for_tag (Tag? tag = null);
   public abstract Gee.LinkedList<Task> get_tasks (List? l = null);
-  public abstract Gee.LiskedList<List> get_lists ();
+  public abstract Gee.LinkedList<List> get_lists ();
 
 	/*TODO: tags */
 	public abstract void create_list (List l);

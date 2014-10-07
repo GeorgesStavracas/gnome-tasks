@@ -25,6 +25,7 @@ VALA_SOURCES = \
     backend/tasks-manager.vala \
     backend/tasks-plugin-manager.vala \
     backend/tasks-settings.vala \
+    backend/tasks-tag.vala \
     backend/tasks-task.vala \
     \
     util/tasks-datetime.vala \

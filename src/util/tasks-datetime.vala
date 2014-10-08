@@ -24,21 +24,51 @@ public class DateTime : GLib.Object
 {
   private GLib.DateTime base_time;
 
-  public GLib.TimeZone timezone {get; set;}
+  public TimeZone timezone {get; set;}
 
-  public long year {get; set;}
-  public uint month {get; set;}
-  public uint day {get; set;}
-
-  public uint hour {get; set;}
-  public uint minute {get; set;}
-  public uint second {get; set;}
-
-  public bool daylight {get; set; default=false;}
-
-  public DateTime ()
+  public int year
   {
-    base_time = new GLib.DateTime.now_local();
+    get {return base_time.get_year ();}
+    set {base_time.add_years (base_time.get_year () - value);}
+  }
+
+  public int month
+  {
+    get {return base_time.get_month ();}
+    set {base_time.add_months (base_time.get_month () - value);}
+  }
+
+  public int day
+  {
+    get {return base_time.get_day_of_month ();}
+    set {base_time.add_days (base_time.get_day_of_month () - value);}
+  }
+
+  public int hour
+  {
+    get {return base_time.get_hour ();}
+    set {base_time.add_hours (base_time.get_hour () - value);}
+  }
+
+  public int minute
+  {
+    get {return base_time.get_minute ();}
+    set {base_time.add_minutes (base_time.get_minute () - value);}
+  }
+
+  public int second
+  {
+    get {return base_time.get_second ();}
+    set {base_time.add_seconds (base_time.get_second () - value);}
+  }
+
+  public bool daylight {
+    get {return base_time.is_daylight_savings ();}
+  }
+
+  public DateTime (TimeZone tz = new TimeZone.local ())
+  {
+    base_time = new GLib.DateTime.now (tz);
   }
 }
 

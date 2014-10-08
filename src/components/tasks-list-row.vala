@@ -20,7 +20,7 @@
 namespace Tasks
 {
 
-[GtkTemplate (ui = "/apps/tasks/resources/list_row.ui")]
+[GtkTemplate (ui = "/apps/tasks/resources/list-row.ui")]
 public class ListRow : Gtk.ListBoxRow
 {
   [GtkChild]

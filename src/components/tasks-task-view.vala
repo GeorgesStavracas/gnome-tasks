@@ -20,7 +20,7 @@
 namespace Tasks
 {
 
-[GtkTemplate (ui = "/apps/tasks/resources/task_view.ui")]
+[GtkTemplate (ui = "/apps/tasks/resources/task-view.ui")]
 public class TaskView : Gtk.Grid
 {
   [GtkChild]

@@ -2,11 +2,12 @@
 <gresources>
   <gresource prefix="/apps/tasks/">
     <file compressed="true">resources/editor.ui</file>
-    <file compressed="true">resources/list_row.ui</file>
+    <file compressed="true">resources/list-row.ui</file>
+    <file compressed="true">resources/new-task-dialog.ui</file>
     <file compressed="true">resources/preferences.ui</file>
     <file compressed="true">resources/style.css</file>
-    <file compressed="true">resources/task_row.ui</file>
-    <file compressed="true">resources/task_view.ui</file>
+    <file compressed="true">resources/task-row.ui</file>
+    <file compressed="true">resources/task-view.ui</file>
     <file compressed="true">resources/window.ui</file>
   </gresource>
 

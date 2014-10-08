@@ -29,6 +29,7 @@ VALA_SOURCES = \
     backend/tasks-task.vala \
     \
     components/tasks-list-row.vala \
+    components/tasks-new-task-dialog.vala \
     components/tasks-preferences-dialog.vala \
     components/tasks-task-row.vala \
     components/tasks-task-view.vala \
@@ -37,7 +38,7 @@ VALA_SOURCES = \
     \
     sources/tasks-local-source.vala \
     \
-    util/tasks-datetime.vala \
+    util/tasks-datetime.vala
 
 tasks_SOURCES = \
     $(VALA_SOURCES) \

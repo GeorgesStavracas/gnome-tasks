@@ -102,7 +102,7 @@ AC_OUTPUT
 
 echo "
 
-    GNOME Tasks $VERSION
+    Tasks for GNOME $VERSION
 
     Prefix: ${prefix}
     Vala compiler: ${VALAC}

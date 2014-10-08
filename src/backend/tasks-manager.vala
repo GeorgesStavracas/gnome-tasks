@@ -46,8 +46,7 @@ public class Manager : GLib.Object
     sources = new Gee.LinkedList<DataSource> ();
 
     /* Local source is the default embedded source */
-    LocalSource source = new LocalSource ();
-    this.register_source (source);
+    this.register_source (new LocalSource ());
   }
 
 	public void register_source (DataSource source)

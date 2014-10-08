@@ -62,6 +62,7 @@ public class Window : Gtk.ApplicationWindow
 
     tasks_list.row_activated.connect (this.set_task);
     back_button.clicked.connect (this.on_back_button_clicked);
+    new_task_button.clicked.connect (this.on_new_task_button_clicked);
   }
 
   private void setup_example_tasks ()
@@ -86,13 +87,19 @@ public class Window : Gtk.ApplicationWindow
     stack1.visible_child_name = "tasks";
   }
 
+  private void on_new_task_button_clicked ()
+  {
+    NewTaskDialog dialog;
+
+    dialog = new NewTaskDialog (this.app);
+    dialog.transient_for = this;
+		dialog.present ();
+  }
+
   private void setup_menu () {
 		var preferences = new GLib.SimpleAction("preferences", null);
   	var about = new GLib.SimpleAction("about", null);
-  	
-    	/* Connect the 'activate' signal to the
-	   * signal handler (aka. callback).
-	   */
+
 	  about.activate.connect (on_about_activate);
 	  preferences.activate.connect (on_preferences_activate);
 	  this.add_action(about);
@@ -104,7 +111,7 @@ public class Window : Gtk.ApplicationWindow
     ListRow row;
 
     row = new ListRow (l);
-    row.show_all ();
+    row.show ();
     lists_listbox.add (row);
   }
 

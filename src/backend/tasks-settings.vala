@@ -41,19 +41,19 @@ public class Settings : GLib.Object
     {
       window_ = value;
 
-      settings.bind("tasks-paned-position", value.tasks_paned, "position", GLib.SettingsBindFlags.DEFAULT);
+      settings.bind ("tasks-paned-position", value.tasks_paned, "position", GLib.SettingsBindFlags.DEFAULT);
       
       value.configure_event.connect( (event) =>
       {
         int[] size = new int[2];
         int[] position = new int[2];
 
-        value.get_size(out size[0], out size[1]);
-        value.get_position(out position[0], out position[1]);
+        value.get_size (out size[0], out size[1]);
+        value.get_position (out position[0], out position[1]);
 
-        settings.set("window-size", "(ii)", size[0], size[1]);
-        settings.set("window-position", "(ii)", position[0], position[1]);
-        settings.set("window-maximized", "b", value.is_maximized);
+        settings.set ("window-size", "(ii)", size[0], size[1]);
+        settings.set ("window-position", "(ii)", position[0], position[1]);
+        settings.set ("window-maximized", "b", value.is_maximized);
 
         return false;
       });

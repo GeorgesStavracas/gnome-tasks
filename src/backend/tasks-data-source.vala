@@ -32,14 +32,17 @@ public interface DataSource : GLib.Object
   public abstract void deinit ();
 
   public abstract int count_tasks (List? l = null);
-  //public abstract int count_tasks_for_tag (Tag? tag = null);
+  public abstract int count_tasks_for_tag (Tag? tag = null);
   public abstract Gee.LinkedList<Task> get_tasks (List? l = null);
   public abstract Gee.LinkedList<List> get_lists ();
 
-	/*TODO: tags */
-	public abstract void create_list (List l);
-	public abstract void update_list (List l);
-	public abstract void remove_list (List l);
+  public abstract void create_list (List l);
+  public abstract void update_list (List l);
+  public abstract void remove_list (List l);
+
+  public abstract void create_tag (Tag t);
+  public abstract void update_tag (Tag t);
+  public abstract void remove_tag (Tag t);
 
   public abstract void create_task (Task t);
   public abstract void update_task (Task t);

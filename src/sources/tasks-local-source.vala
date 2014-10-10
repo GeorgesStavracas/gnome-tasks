@@ -155,7 +155,12 @@ public class LocalSource : GLib.Object, Tasks.DataSource
     return 0;
   }
 
-  //public abstract int count_tasks_for_tag (Tag? tag = null);
+  public int count_tasks_for_tag (Tag? tag = null)
+  {
+    message ("stub");
+    return 0;
+  }
+
   public Gee.LinkedList<Task> get_tasks (List? l = null)
   {
     message ("stub");
@@ -168,7 +173,6 @@ public class LocalSource : GLib.Object, Tasks.DataSource
     return new Gee.LinkedList<List> ();
   }
 
-	/*TODO: tags */
 	public void create_list (List l)
 	{
 	  message ("stub");
@@ -180,6 +184,21 @@ public class LocalSource : GLib.Object, Tasks.DataSource
 	}
 
 	public void remove_list (List l)
+	{
+	  message ("stub");
+	}
+
+	public void create_tag (Tag t)
+	{
+	  message ("stub");
+	}
+
+	public void update_tag (Tag t)
+	{
+	  message ("stub");
+	}
+
+	public void remove_tag (Tag t)
 	{
 	  message ("stub");
 	}

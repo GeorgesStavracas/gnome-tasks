@@ -1,49 +1,41 @@
-=============
-The Virtaus Project
-=============
-
-===========
-What is Virtaus
+GNOME Tasks
 ===========
 
-Virtaus is an easy-to-use, intuitive and completely free and open source
-creativity manager, build upon the GObject technology. It was designed
-to be an extremely user-friendly tool.
+What is
+-------
 
-===============
-Unlimited possibilities
-===============
+GNOME Tasks is a powerful task manager built upon GNOME technologies. It aims to be a simple task manager,
+with the following features:
 
-Virtaus was conceived with high modularity and extensbility in mind, and
-so it offers a powerful extension API. With this, any developer or institution
-will be able to easily adapt the application to it's needs without even touching
-the source code. Need any image filter? Want another functionality? Make it!
+* Simple but powerful task management
+* Subtasks support
+* Advanced markdown-style description editor
+* Lists & Tags support
 
-===============
 System Requirements
-===============
+-------------------
 
-Virtaus should build on most *NIX. It's dependencies are:
+GNOME Tasks should build on most GNOME environments. It's dependencies are:
 
 * GLib >= 2.36
-* Gtk+ >= 3.12
+* Gtk+ >= 3.11.9
 * Sqlite3
+* Peas & PeasGtk
 
 
-==========
 Development
-==========
+-----------
 
 You can check on the current development status of the Virtaus Project at:
 
-    https://github.com/GeorgesStavracas/Virtaus
+    https://github.com/GeorgesStavracas/gnome-tasks
 
 Comments, ideas and (most of all) bug reports (and especially patches)
 are very welcome.
 
-## Current status
+Current status
+--------------
 
 - [x] Plugin system
 - [ ] Local data source
-- [ ] Local data source (plugin)
 - [ ] User Interface

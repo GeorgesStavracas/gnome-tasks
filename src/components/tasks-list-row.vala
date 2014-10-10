@@ -28,7 +28,7 @@ public class ListRow : Gtk.ListBoxRow
   [GtkChild]
   private Gtk.Frame _color;
   [GtkChild]
-  private Gtk.Frame _counter_frame;
+  private Gtk.Label _counter;
 
   /* Properties */
   public unowned List list_;
@@ -39,6 +39,13 @@ public class ListRow : Gtk.ListBoxRow
     {
       this.list_ = value;
       this.name = value.name;
+
+      value.tasks_counted.connect ((counter) =>
+      {
+        _counter.label = counter.to_string ();
+      });
+
+      value.update_task_number ();
     }
   }
   public new string name

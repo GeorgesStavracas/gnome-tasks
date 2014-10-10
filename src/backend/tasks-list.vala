@@ -19,18 +19,46 @@
 
 namespace Tasks
 {
+public delegate bool ListFilterFunc (Task task);
+
 
 public class List : Tasks.BaseObject
 {
-  public delegate bool FilterFunc (Task task);
+  public ListFilterFunc filter = default_filter;
 
-  public FilterFunc filter = default_filter;
+  /* This signal is emmited when the source releases
+   * any updates.
+   */
+  public signal void tasks_counted (int n);
 
   public List (int id = -1, string name = "", DataSource? source = null)
   {
     this.id = id;
     this.name = name;
     this.source = source;
+  }
+
+  public void update_task_number ()
+  {
+    Manager manager;
+    int counter;
+
+    manager = Manager.instance;
+    counter = 0;
+
+    /* When the source is null,
+     * we count for every souce available */
+    if (source == null)
+    {
+      foreach (DataSource src in manager.sources)
+        counter += src.count_tasks (this);
+    }
+    else
+    {
+      counter = source.count_tasks (this);
+    }
+
+    tasks_counted (counter);
   }
 
   protected bool default_filter (Task task)

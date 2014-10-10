@@ -24,13 +24,57 @@ namespace Tasks
 public class NewTaskDialog : Gtk.Dialog
 {
   [GtkChild]
-  protected Gtk.HeaderBar headerbar;
+  private Gtk.HeaderBar headerbar;
+  [GtkChild]
+  private Gtk.Popover calendar_popover;
+  [GtkChild]
+  private Gtk.Popover time_popover;
+  [GtkChild]
+  private Gtk.ToggleButton calendar_toggle;
+  [GtkChild]
+  private Gtk.ToggleButton time_toggle;
+  [GtkChild]
+  private Gtk.Calendar calendar;
+  [GtkChild]
+  private Gtk.Button cancel_button;
+  [GtkChild]
+  private Gtk.Button create_button;
+
   protected unowned Tasks.Application app;
 
   public NewTaskDialog (Tasks.Application app)
   {
     this.app = app;
     this.set_titlebar (headerbar);
+
+    calendar_toggle.bind_property ("active", calendar_popover, "visible", GLib.BindingFlags.BIDIRECTIONAL);
+    time_toggle.bind_property ("active", time_popover, "visible", GLib.BindingFlags.BIDIRECTIONAL);
+
+    calendar.day_selected.connect (this.on_calendar_day_selected);
+    calendar.day_selected_double_click.connect (this.on_calendar_day_selected_double_click);
+
+    cancel_button.clicked.connect (on_header_button_clicked);
+    create_button.clicked.connect (on_header_button_clicked);
+  }
+
+  private void on_header_button_clicked (Gtk.Button button)
+  {
+    if (button == create_button);
+    this.close ();
+  }
+
+  private void on_calendar_day_selected ()
+  {
+    
+  }
+
+  private void on_calendar_day_selected_double_click ()
+  {
+    calendar_popover.visible = false;
+  }
+
+  private void set_calendar_toggle_text ()
+  {
   }
 }
 

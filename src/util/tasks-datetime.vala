@@ -29,37 +29,37 @@ public class DateTime : GLib.Object
   public int year
   {
     get {return base_time.get_year ();}
-    set {base_time.add_years (base_time.get_year () - value);}
+    set {base_time = base_time.add_years (base_time.get_year () - value);}
   }
 
   public int month
   {
     get {return base_time.get_month ();}
-    set {base_time.add_months (base_time.get_month () - value);}
+    set {base_time = base_time.add_months (base_time.get_month () - value);}
   }
 
   public int day
   {
     get {return base_time.get_day_of_month ();}
-    set {base_time.add_days (base_time.get_day_of_month () - value);}
+    set {base_time = base_time.add_days (base_time.get_day_of_month () - value);}
   }
 
   public int hour
   {
     get {return base_time.get_hour ();}
-    set {base_time.add_hours (base_time.get_hour () - value);}
+    set {base_time = base_time.add_hours (base_time.get_hour () - value);}
   }
 
   public int minute
   {
     get {return base_time.get_minute ();}
-    set {base_time.add_minutes (base_time.get_minute () - value);}
+    set {base_time = base_time.add_minutes (base_time.get_minute () - value);}
   }
 
   public int second
   {
     get {return base_time.get_second ();}
-    set {base_time.add_seconds (base_time.get_second () - value);}
+    set {base_time = base_time.add_seconds (base_time.get_second () - value);}
   }
 
   public bool daylight {

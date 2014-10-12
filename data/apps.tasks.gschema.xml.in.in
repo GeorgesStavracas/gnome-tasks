@@ -26,6 +26,13 @@
                 Position of the tasks' view separator.
             </_description>
         </key>
+        <key name="date-format" type="s">
+            <default>"%m/%d/%Y"</default>
+            <_summary>Default date format.</_summary>
+            <_description>
+                Default date format.
+            </_description>
+        </key>
     </schema>
 
     <schema id="apps.tasks.plugins" path="/apps/tasks/plugins/">

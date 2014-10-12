@@ -25,6 +25,9 @@ public class PreferencesDialog : Gtk.Dialog
 {
   [GtkChild]
   protected Gtk.HeaderBar headerbar;
+  [GtkChild]
+  internal Gtk.ComboBoxText format_combo;
+
   protected unowned Tasks.Application app;
 
   public PreferencesDialog (Tasks.Application app)

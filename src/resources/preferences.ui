@@ -45,9 +45,9 @@ along with .  If not, see <http://www.gnu.org/licenses/>.
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="can_focus">False</property>
-        <property name="border_width">0</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
+        <property name="border_width">0</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area1">
             <property name="can_focus">False</property>
@@ -70,24 +70,46 @@ along with .  If not, see <http://www.gnu.org/licenses/>.
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="show_border">False</property>
+            <property name="border_width">0</property>
             <child>
               <object class="GtkGrid" id="grid1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="border_width">12</property>
+                <property name="row_spacing">12</property>
+                <property name="column_spacing">12</property>
                 <child>
-                  <placeholder/>
+                  <object class="GtkLabel" id="label3">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="xalign">0</property>
+                    <property name="hexpand">True</property>
+                    <property name="label" translatable="yes">Default date format</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">0</property>
+                  </packing>
                 </child>
                 <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
+                  <object class="GtkComboBoxText" id="format_combo">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="hexpand">False</property>
+                    <property name="active">0</property>
+                    <items>
+                      <item translatable="no" id="dd/mm/YYYY">dd/mm/YYYY</item>
+                      <item translatable="no" id="mm/dd/YYYY">mm/dd/YYYY</item>
+                      <item translatable="no" id="YYYY/mm/dd">YYYY/mm/dd</item>
+                      <item translatable="no" id="dd-mm-YYYY">dd-mm-YYYY</item>
+                      <item translatable="no" id="mm-dd-YYYY">mm-dd-YYYY</item>
+                      <item translatable="no" id="YYYY-mm-dd">YYYY-mm-dd</item>
+                    </items>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">0</property>
+                  </packing>
                 </child>
                 <child>
                   <placeholder/>

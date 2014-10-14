@@ -70,6 +70,29 @@ public class DateTime : GLib.Object
   {
     base_time = new GLib.DateTime.now (tz);
   }
+
+  public int compare (Tasks.DateTime d2)
+  {
+    if (d2.year != this.year)
+      return d2.year - this.year;
+
+    if (d2.month != this.month)
+      return d2.month - this.month;
+
+    if (d2.day != this.day)
+      return d2.day - this.day;
+
+    if (d2.hour != this.hour)
+      return d2.hour - this.hour;
+
+    if (d2.minute != this.minute)
+      return d2.minute - this.minute;
+
+    if (d2.second != this.second)
+      return d2.second - this.second;
+
+    return 0;
+  }
 }
 
 }

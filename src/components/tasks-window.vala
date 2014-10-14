@@ -122,6 +122,9 @@ public class Window : Gtk.ApplicationWindow
 
 		dialog = new Tasks.PreferencesDialog (this.app);
 		dialog.transient_for = this;
+
+    Settings.configure_preferences_dialog (dialog);
+
 		dialog.present ();
   }
 
@@ -149,7 +152,7 @@ public class Window : Gtk.ApplicationWindow
 	  dialog.documenters = documenters;
 
 	  dialog.program_name = _("Tasks");
-	  dialog.comments = _("Manage your creativity, the modular way.");
+	  dialog.comments = _("Simple and clean manager for your tasks.");
 	  dialog.copyright = _("Copyright \xc2\xa9 2012-2014 The Tasks Project authors\n");
 	  dialog.version = "3.13.1";
 	  dialog.license_type = Gtk.License.GPL_3_0;

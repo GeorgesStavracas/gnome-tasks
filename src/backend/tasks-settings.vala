@@ -33,7 +33,7 @@ public class Settings : GLib.Object
       return instance_;
     }
   }
-  
+
   /* Tasks.Window */
   private Tasks.Window window_; 
   public Tasks.Window window {
@@ -60,16 +60,32 @@ public class Settings : GLib.Object
       
     }
   }
+
+  /* Tasks.PreferencesDialog */
+  private Tasks.PreferencesDialog preferences_;
+  public Tasks.PreferencesDialog preferences {
+    set
+    {
+      preferences_ = value;
+
+      settings.bind ("date-format", value.format_combo, "active-id", GLib.SettingsBindFlags.DEFAULT);
+    }
+  }
   
   /* Settings */
-	private GLib.Settings settings {public get; private set;}
+  public GLib.Settings settings {public get; private set;}
 
   private Settings ()
   {
   	/* Load settings */
 		settings = new GLib.Settings ("apps.tasks");
   }
-  
+
+  public static void configure_preferences_dialog (Tasks.PreferencesDialog dialog)
+  {
+    instance.preferences = dialog;
+  }
+
   public static void configure_window (Tasks.Window window)
   {
     int x, y, w, h;

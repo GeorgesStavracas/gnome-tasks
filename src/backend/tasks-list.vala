@@ -26,7 +26,8 @@ public class List : Tasks.BaseObject
 {
   public ListFilterFunc filter = default_filter;
 
-  /* This signal is emmited when the source releases
+  /**
+   * This signal is emmited when the source releases
    * any updates.
    */
   public signal void tasks_counted (int n);

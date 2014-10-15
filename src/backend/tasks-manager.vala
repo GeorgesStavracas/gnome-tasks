@@ -49,8 +49,9 @@ public class Manager : GLib.Object
     this.register_source (new LocalSource ());
   }
 
-	public void register_source (DataSource source)
-	{
+  public void register_source (DataSource source)
+  {
+    message ("Registering source \"" + source.get_source_name () + "\"");
     sources.add (source);
     source_registered (source);
     source.init ();
@@ -62,7 +63,10 @@ public class Manager : GLib.Object
 
 	  all = new List (-1, _("All"));
 	  all.filter = (t) => {
-	    return true;
+	    Tasks.DateTime now;
+
+	    now = new Tasks.DateTime ();
+	    return (now.compare (t.due) > -1);
 	  };
 
 	  done = new List (-1, _("Done"));
@@ -72,8 +76,10 @@ public class Manager : GLib.Object
 
 	  overdue = new List (-1, _("Overdue"));
 	  done.filter = (t) => {
-	    /* TODO: return true to overdone tasks */;
-	    return false;
+	    Tasks.DateTime now;
+
+	    now = new Tasks.DateTime ();
+	    return (now.compare (t.due) == -1);
 	  };
 
 	  register_list (all);

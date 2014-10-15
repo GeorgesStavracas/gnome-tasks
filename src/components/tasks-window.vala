@@ -20,6 +20,12 @@
 namespace Tasks
 {
 
+public static void clear_listbox (Gtk.ListBox list)
+{
+  foreach (Gtk.Widget widget in list.get_children ())
+    list.remove (widget);
+}
+
 [GtkTemplate (ui = "/apps/tasks/resources/window.ui")]
 public class Window : Gtk.ApplicationWindow
 {
@@ -40,11 +46,18 @@ public class Window : Gtk.ApplicationWindow
 
   protected unowned Tasks.Application app;
 
-  public Window (Tasks.Application app) {
-  	Object(application: app);
-  	this.app = app;
+  private Gee.LinkedList<unowned Task> current_task_list;
 
-  	overlay.show_all ();
+  public Window (Tasks.Application app) {
+    Object(application: app);
+    this.app = app;
+
+    overlay.show_all ();
+
+    /* Tasks are always sorted */
+    tasks_list.set_sort_func (Tasks.sort_task_rows);
+
+    current_task_list = new Gee.LinkedList<unowned Task> ();
 
     setup_example_tasks ();
     setup_signals ();
@@ -61,6 +74,7 @@ public class Window : Gtk.ApplicationWindow
     manager.register_list.connect (this.add_list);
 
     tasks_list.row_activated.connect (this.set_task);
+    lists_listbox.row_activated.connect (this.set_list);
     back_button.clicked.connect (this.on_back_button_clicked);
     new_task_button.clicked.connect (this.on_new_task_button_clicked);
   }
@@ -78,6 +92,41 @@ public class Window : Gtk.ApplicationWindow
     new_task_button.visible = false;
     back_button.visible = true;
     stack1.visible_child_name = "details";
+  }
+
+  private void set_list (Gtk.ListBox unused, Gtk.ListBoxRow? obj)
+  {
+    ListRow row;
+    weak DataSource? source;
+
+    if (obj == null)
+      return;
+
+    row = obj as ListRow;
+    source = row.list.source;
+
+    /* Clear the lists */
+    Tasks.clear_listbox (tasks_list);
+    current_task_list.clear ();
+
+    /**
+     * If the source is null, it fetches the tasks
+     * from every source available.
+     */
+    if (source == null)
+    {
+      Manager manager;
+      manager = Manager.instance;
+
+      foreach (DataSource s in manager.sources)
+        current_task_list.add_all (s.get_tasks (row.list));
+    }
+    else
+    {
+      current_task_list.add_all (source.get_tasks (row.list));
+    }
+
+    append_tasks (current_task_list);
   }
 
   private void on_back_button_clicked ()
@@ -104,6 +153,20 @@ public class Window : Gtk.ApplicationWindow
 	  preferences.activate.connect (on_preferences_activate);
 	  this.add_action(about);
 	  this.add_action(preferences);
+  }
+
+  private void append_tasks (Gee.LinkedList<Task>? list)
+  {
+    if (list == null)
+      return;
+
+    foreach (Task t in list)
+    {
+      TaskRow row;
+
+      row = new TaskRow (t);
+      tasks_list.add (row);
+    }
   }
 
   public void add_list (List l)

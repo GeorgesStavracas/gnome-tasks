@@ -31,8 +31,8 @@ public class ListRow : Gtk.ListBoxRow
   private Gtk.Label _counter;
 
   /* Properties */
-  public unowned List list_;
-  public unowned List list
+  public List list_;
+  public List list
   {
     public get{return this.list_;}
     private set

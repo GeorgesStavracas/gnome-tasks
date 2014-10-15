@@ -74,7 +74,7 @@ public class Window : Gtk.ApplicationWindow
     manager.register_list.connect (this.add_list);
 
     tasks_list.row_activated.connect (this.set_task);
-    lists_listbox.row_activated.connect (this.set_list);
+    lists_listbox.row_selected.connect (this.set_list);
     back_button.clicked.connect (this.on_back_button_clicked);
     new_task_button.clicked.connect (this.on_new_task_button_clicked);
   }

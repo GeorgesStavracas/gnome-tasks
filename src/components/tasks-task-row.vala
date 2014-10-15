@@ -23,8 +23,34 @@ namespace Tasks
 [GtkTemplate (ui = "/apps/tasks/resources/task-row.ui")]
 public class TaskRow : Gtk.ListBoxRow
 {
-  public TaskRow () {
-  	
+  [GtkChild]
+  private Gtk.CheckButton _completed;
+  [GtkChild]
+  private Gtk.Label _end;
+  [GtkChild]
+  private Gtk.Label _title;
+  [GtkChild]
+  private Gtk.Label _subtitle;
+
+  private unowned Task task_;
+  public Task task
+  {
+    get
+    {
+      return task_;
+    }
+
+    private set
+    {
+      task_ = value;
+
+      _title.label = value.name;
+    }
+  }
+
+  public TaskRow (Task? task = null) {
+    if (task != null)
+      this.task = task;
   }
 }
 

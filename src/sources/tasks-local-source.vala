@@ -151,71 +151,71 @@ public class LocalSource : GLib.Object, Tasks.DataSource
 
   public int count_tasks (List? l = null)
   {
-    message ("stub");
+    message ("count_tasks STUB");
     return 0;
   }
 
   public int count_tasks_for_tag (Tag? tag = null)
   {
-    message ("stub");
+    message ("count_tasks_for_tag STUB");
     return 0;
   }
 
   public Gee.LinkedList<Task> get_tasks (List? l = null)
   {
-    message ("stub");
+    message ("get_tasks STUB");
     return new Gee.LinkedList<Task> ();
   }
 
   public Gee.LinkedList<List> get_lists ()
   {
-    message ("stub");
+    message ("get_lists STUB");
     return new Gee.LinkedList<List> ();
   }
 
 	public void create_list (List l)
 	{
-	  message ("stub");
+	  message ("create_list STUB");
 	}
 
 	public void update_list (List l)
 	{
-	  message ("stub");
+	  message ("update_list STUB");
 	}
 
 	public void remove_list (List l)
 	{
-	  message ("stub");
+	  message ("remove_list STUB");
 	}
 
 	public void create_tag (Tag t)
 	{
-	  message ("stub");
+	  message ("create_tag STUB");
 	}
 
 	public void update_tag (Tag t)
 	{
-	  message ("stub");
+	  message ("update_tag STUB");
 	}
 
 	public void remove_tag (Tag t)
 	{
-	  message ("stub");
+	  message ("remove_tag STUB");
 	}
 
   public void create_task (Task t)
   {
-    message ("stub");
+    message ("create_task STUB");
   }
 
   public void update_task (Task t)
   {
-    message ("stub");
+    message ("update_task STUB");
   }
 
   public void remove_task (Task t)
   {
-    message ("stub");
+    message ("remove_task STUB");
   }
 }
 

@@ -38,7 +38,8 @@ VALA_SOURCES = \
     \
     sources/tasks-local-source.vala \
     \
-    util/tasks-datetime.vala
+    util/tasks-datetime.vala \
+    util/tasks-functions.vala
 
 tasks_SOURCES = \
     $(VALA_SOURCES) \

@@ -14,8 +14,9 @@ CREATE TABLE 'Tag'
 CREATE TABLE 'Task'
 (
   id          INTEGER PRIMARY KEY ASC,
-  parent      INTEGER,
-  list        INTEGER,
+  parent      INTEGER NOT NULL,
+  list        INTEGER NOT NULL,
+  priority    INTEGER NOT NULL,
   descripion  TEXT NOT NULL,
   completed   INTEGER NOT NULL,
   due_date    DATETIME NOT NULL,

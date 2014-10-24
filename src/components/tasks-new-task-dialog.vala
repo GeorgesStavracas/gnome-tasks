@@ -255,18 +255,10 @@ public class NewTaskDialog : Gtk.Dialog
 
   private void set_hour_toggle_text ()
   {
-    string time_text;
-
     if (all_day_check.active)
-      time_text = all_day_label.label;
+      time_label.label = all_day_label.label;
     else
-    {
-      time_text = (hour_spin.value < 10 ? "0"+hour_spin.text : hour_spin.text)
-                  + ":"
-                  + (minute_spin.value < 10 ? "0"+minute_spin.text : minute_spin.text);
-    }
-
-    time_label.label = time_text;
+      time_label.label = hour_spin.text + ":" + minute_spin.text;
   }
 
   private bool on_output (Gtk.SpinButton button)

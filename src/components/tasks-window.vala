@@ -59,7 +59,6 @@ public class Window : Gtk.ApplicationWindow
 
     current_task_list = new Gee.LinkedList<unowned Task> ();
 
-    setup_example_tasks ();
     setup_signals ();
   	setup_menu ();
 
@@ -73,23 +72,17 @@ public class Window : Gtk.ApplicationWindow
     manager = Manager.instance;
     manager.register_list.connect (this.add_list);
 
+    back_button.bind_property ("visible", new_task_button, "visible", GLib.BindingFlags.BIDIRECTIONAL |
+                                                                      GLib.BindingFlags.INVERT_BOOLEAN);
+
     tasks_list.row_activated.connect (this.set_task);
     lists_listbox.row_selected.connect (this.set_list);
     back_button.clicked.connect (this.on_back_button_clicked);
     new_task_button.clicked.connect (this.on_new_task_button_clicked);
   }
 
-  private void setup_example_tasks ()
-  {
-    TaskRow row;
-
-    row = new TaskRow ();
-    tasks_list.add (row);
-  }
-
   private void set_task (Gtk.ListBoxRow? obj)
   {
-    new_task_button.visible = false;
     back_button.visible = true;
     stack1.visible_child_name = "details";
   }
@@ -132,7 +125,6 @@ public class Window : Gtk.ApplicationWindow
   private void on_back_button_clicked ()
   {
     new_task_button.visible = true;
-    back_button.visible = false;
     stack1.visible_child_name = "tasks";
   }
 

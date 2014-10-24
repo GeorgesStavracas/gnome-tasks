@@ -32,6 +32,9 @@ public static int sort_task_rows (Gtk.ListBoxRow row1, Gtk.ListBoxRow row2)
   task_row2 = row2 as TaskRow;
   date = task_row1.task.due.compare (task_row2.task.due);
 
+  if (task_row1.task.priority != task_row2.task.priority)
+    return task_row1.task.priority - task_row2.task.priority;
+
   if (date == 0)
   {
     if (task_row1.task.name < task_row2.task.name)

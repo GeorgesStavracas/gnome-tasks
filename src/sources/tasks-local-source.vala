@@ -141,12 +141,12 @@ public class LocalSource : GLib.Object, Tasks.DataSource
 
 	public string get_name ()
 	{
-	  return "Local";
+	  return _("Local");
 	}
 
   public string get_source_name ()
   {
-    return "Local source";
+    return _("Local source");
   }
 
   public int count_tasks (List? l = null)

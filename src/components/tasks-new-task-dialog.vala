@@ -81,7 +81,9 @@ public class NewTaskDialog : Gtk.Dialog
                                                                    GLib.BindingFlags.INVERT_BOOLEAN);
 
     hour_spin.activate.connect (()=>{time_popover.visible = false;}); /* lambda function to hide the popover */
+    hour_spin.output.connect (this.on_output);
     minute_spin.activate.connect (()=>{time_popover.visible = false;});
+    minute_spin.output.connect (this.on_output);
     time_popover.hide.connect (this.on_time_popover_hidden);
 
     calendar.day_selected.connect (this.on_calendar_day_selected);
@@ -163,7 +165,6 @@ public class NewTaskDialog : Gtk.Dialog
 
   private void on_source_item_selected (Variant? parameter)
   {
-    DataSource source;
     string key;
     string[] values;
 
@@ -185,10 +186,14 @@ public class NewTaskDialog : Gtk.Dialog
       if (values[1] != _("Default") && values[1] == l.name)
       {
         this.selected_list = l;
-        break;
       }
 
-      /* TODO: populate parent list */
+      var tasks = this.selected_source.get_tasks (l);
+
+      foreach (Task t in tasks)
+      {
+        /* TODO: populate parent list */
+      }
     }
   }
 
@@ -262,6 +267,12 @@ public class NewTaskDialog : Gtk.Dialog
     }
 
     time_label.label = time_text;
+  }
+
+  private bool on_output (Gtk.SpinButton button)
+  {
+    button.set_text ("%02d".printf (button.get_value_as_int ()));
+    return true;
   }
 }
 

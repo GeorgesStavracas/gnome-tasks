@@ -3,6 +3,8 @@
   <gresource prefix="/apps/tasks/">
     <file compressed="true">resources/editor.ui</file>
     <file compressed="true">resources/list-row.ui</file>
+    <file compressed="true">resources/lists-dialog.ui</file>
+    <file compressed="true">resources/menus.ui</file>
     <file compressed="true">resources/new-task-dialog.ui</file>
     <file compressed="true">resources/preferences.ui</file>
     <file compressed="true">resources/style.css</file>

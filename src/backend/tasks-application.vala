@@ -65,11 +65,15 @@ public class Tasks.Application : Gtk.Application
 		// Load plugins from disk
 		load_plugins();
 
+    var section = new GLib.Menu ();
+    section.append (_("Lists"), "win.lists");
+
 		var menu = new GLib.Menu ();
 		menu.append (_("About"), "win.about");
 		menu.append (_("Quit"), "app.quit");
 
 		var tmp = new GLib.Menu();
+		tmp.append_section(null, section);
 		tmp.append(_("Preferences"), "win.preferences");
 		tmp.append_section(null, menu);
 

@@ -29,6 +29,7 @@ VALA_SOURCES = \
     backend/tasks-task.vala \
     \
     components/tasks-list-row.vala \
+    components/tasks-lists-dialog.vala \
     components/tasks-new-task-dialog.vala \
     components/tasks-preferences-dialog.vala \
     components/tasks-task-row.vala \

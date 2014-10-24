@@ -40,6 +40,8 @@ public class Window : Gtk.ApplicationWindow
   [GtkChild]
   public Gtk.Button back_button;
   [GtkChild]
+  public Gtk.MenuButton menu_button;
+  [GtkChild]
   public Gtk.Button new_task_button;
   [GtkChild]
   public Gtk.Stack stack1;
@@ -138,11 +140,21 @@ public class Window : Gtk.ApplicationWindow
   }
 
   private void setup_menu () {
+    Gtk.Builder builder;
+
+    builder = new Gtk.Builder ();
+    builder.add_from_resource ("/apps/tasks/resources/menus.ui");
+
+    menu_button.menu_model = builder.get_object ("winmenu") as GLib.MenuModel;
+
+    var lists = new GLib.SimpleAction("lists", null);
 		var preferences = new GLib.SimpleAction("preferences", null);
   	var about = new GLib.SimpleAction("about", null);
 
+    lists.activate.connect (on_lists_activate);
 	  about.activate.connect (on_about_activate);
 	  preferences.activate.connect (on_preferences_activate);
+	  this.add_action(lists);
 	  this.add_action(about);
 	  this.add_action(preferences);
   }
@@ -168,6 +180,17 @@ public class Window : Gtk.ApplicationWindow
     row = new ListRow (l);
     row.show ();
     lists_listbox.add (row);
+  }
+
+  /* Show lists dialog */
+  private void on_lists_activate ()
+  {
+		Tasks.ListsDialog dialog;
+
+		dialog = new Tasks.ListsDialog (this.app);
+		dialog.transient_for = this;
+
+		dialog.present ();
   }
 
   /* Show preferences dialog */

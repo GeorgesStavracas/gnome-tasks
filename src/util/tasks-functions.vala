@@ -20,6 +20,13 @@
 namespace Tasks
 {
 
+/**
+ * tasks_sort_task_rows:
+ * @row1: source row.
+ * @row2: target row.
+ *
+ * Compare two instances of @TasksTaskRow.
+ */
 public static int sort_task_rows (Gtk.ListBoxRow row1, Gtk.ListBoxRow row2)
 {
   TaskRow task_row1, task_row2;
@@ -50,5 +57,4 @@ public static int sort_task_rows (Gtk.ListBoxRow row1, Gtk.ListBoxRow row2)
 
   return 0;
 }
-
 }

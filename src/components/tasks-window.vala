@@ -62,9 +62,25 @@ public class Window : Gtk.ApplicationWindow
     current_task_list = new Gee.LinkedList<unowned Task> ();
 
     setup_signals ();
-  	setup_menu ();
+    setup_lists ();
+    setup_menu ();
+  }
 
-  	Manager.instance.register_default_lists ();
+  private void setup_lists ()
+  {
+    /* default lists */
+    Manager.instance.register_default_lists ();
+
+    foreach (var source in Manager.instance.sources)
+    {
+      foreach (List l in source.get_lists ())
+      {
+        ListRow row;
+
+        row = new ListRow (l);
+        lists_listbox.insert (row, -1);
+      }
+    }
   }
 
   private void setup_signals ()
@@ -136,7 +152,7 @@ public class Window : Gtk.ApplicationWindow
 
     dialog = new NewTaskDialog (this.app);
     dialog.transient_for = this;
-		dialog.present ();
+    dialog.present ();
   }
 
   private void setup_menu () {
@@ -148,15 +164,15 @@ public class Window : Gtk.ApplicationWindow
     menu_button.menu_model = builder.get_object ("winmenu") as GLib.MenuModel;
 
     var lists = new GLib.SimpleAction("lists", null);
-		var preferences = new GLib.SimpleAction("preferences", null);
-  	var about = new GLib.SimpleAction("about", null);
+    var preferences = new GLib.SimpleAction("preferences", null);
+    var about = new GLib.SimpleAction("about", null);
 
     lists.activate.connect (on_lists_activate);
-	  about.activate.connect (on_about_activate);
-	  preferences.activate.connect (on_preferences_activate);
-	  this.add_action(lists);
-	  this.add_action(about);
-	  this.add_action(preferences);
+    about.activate.connect (on_about_activate);
+    preferences.activate.connect (on_preferences_activate);
+    this.add_action(lists);
+    this.add_action(about);
+    this.add_action(preferences);
   }
 
   private void append_tasks (Gee.LinkedList<Task>? list)
@@ -185,25 +201,25 @@ public class Window : Gtk.ApplicationWindow
   /* Show lists dialog */
   private void on_lists_activate ()
   {
-		Tasks.ListsDialog dialog;
+    Tasks.ListsDialog dialog;
 
-		dialog = new Tasks.ListsDialog (this.app);
-		dialog.transient_for = this;
+    dialog = new Tasks.ListsDialog (this.app);
+    dialog.transient_for = this;
 
-		dialog.present ();
+    dialog.present ();
   }
 
   /* Show preferences dialog */
   private void on_preferences_activate ()
   {
-		Tasks.PreferencesDialog dialog;
+    Tasks.PreferencesDialog dialog;
 
-		dialog = new Tasks.PreferencesDialog (this.app);
-		dialog.transient_for = this;
+    dialog = new Tasks.PreferencesDialog (this.app);
+    dialog.transient_for = this;
 
     Settings.configure_preferences_dialog (dialog);
 
-		dialog.present ();
+    dialog.present ();
   }
 
   // About button
@@ -213,45 +229,45 @@ public class Window : Gtk.ApplicationWindow
       "Georges Basile Stavracas Neto <georges.stavracas@gmail.com>",
       null
     };
-    
+
     const string[] artists = {
-    	"Georges Basile Stavracas Neto <georges.stavracas@gmail.com>",
+      "Georges Basile Stavracas Neto <georges.stavracas@gmail.com>",
       null
     };
-	
-	  const string[] documenters = {
-		  "Georges Basile Stavracas Neto <georges.stavracas@gmail.com>",
+
+    const string[] documenters = {
+      "Georges Basile Stavracas Neto <georges.stavracas@gmail.com>",
       null
-	  };
+    };
 
-	  var dialog = new Gtk.AboutDialog();
-	  dialog.authors = authors;
-	  dialog.artists = artists;
-	  dialog.documenters = documenters;
+    var dialog = new Gtk.AboutDialog();
+    dialog.authors = authors;
+    dialog.artists = artists;
+    dialog.documenters = documenters;
 
-	  dialog.program_name = _("Tasks");
-	  dialog.comments = _("Simple and clean manager for your tasks.");
-	  dialog.copyright = _("Copyright \xc2\xa9 2012-2014 The Tasks Project authors\n");
-	  dialog.version = "3.13.1";
-	  dialog.license_type = Gtk.License.GPL_3_0;
-	  dialog.wrap_license = true;
-	  dialog.website = "https://github.com/GeorgesStavracas/Tasks";
-	  dialog.website_label = _("Tasks website");
+    dialog.program_name = _("Tasks");
+    dialog.comments = _("Simple and clean manager for your tasks.");
+    dialog.copyright = _("Copyright \xc2\xa9 2012-2014 The Tasks Project authors\n");
+    dialog.version = "3.13.1";
+    dialog.license_type = Gtk.License.GPL_3_0;
+    dialog.wrap_license = true;
+    dialog.website = "https://github.com/GeorgesStavracas/Tasks";
+    dialog.website_label = _("Tasks website");
 
-		try
-		{
-			dialog.logo = new Gdk.Pixbuf.from_resource("/apps/tasks/resources/icon.png");
-		}
-		catch (GLib.Error e)
-		{
-			dialog.logo = null;
-		}
+    try
+    {
+      dialog.logo = new Gdk.Pixbuf.from_resource("/apps/tasks/resources/icon.png");
+    }
+    catch (GLib.Error e)
+    {
+      dialog.logo = null;
+    }
 
-	  dialog.transient_for = this;
-	  dialog.modal = true;
-	  dialog.destroy_with_parent = true;
-	
-	  dialog.present();
+    dialog.transient_for = this;
+    dialog.modal = true;
+    dialog.destroy_with_parent = true;
+
+    dialog.present();
   }
 }
 

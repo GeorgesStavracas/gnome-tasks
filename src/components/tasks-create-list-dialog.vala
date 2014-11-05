@@ -45,8 +45,8 @@ public class CreateListDialog : GLib.Object
 
     var button = dialog.add_button (_("Create"), Gtk.ResponseType.OK);
     button.get_style_context ().add_class ("suggested-action");
+    dialog.set_response_sensitive (Gtk.ResponseType.OK, false);
 
-    
     /* builder */
     Gtk.Builder builder = new Gtk.Builder ();
     try
@@ -55,7 +55,12 @@ public class CreateListDialog : GLib.Object
 
       entry = builder.get_object ("name_entry") as Gtk.Entry;
       view = builder.get_object ("lists_treeview") as Gtk.TreeView;
-      store = builder.get_object ("liststore1") as Gtk.ListStore;
+
+      store = new Gtk.ListStore (4,
+                                 typeof (Gdk.Pixbuf),  /* icon */
+                                 typeof (string),      /* name */
+                                 typeof (Gdk.Pixbuf),  /* is_default */
+                                 typeof (DataSource)); /* source (invisible) */
 
       Gtk.Grid grid = builder.get_object ("create_list_grid") as Gtk.Grid;
       grid.show_all ();
@@ -71,36 +76,80 @@ public class CreateListDialog : GLib.Object
   private void setup_sources ()
   {
     Manager manager;
+    Gtk.TreeIter iter;
+    Gtk.TreeViewColumn col;
 
     manager = Manager.instance;
+
     foreach (DataSource source in manager.sources)
     {
-      Gtk.TreeIter iter;
-
       store.append (out iter);
       store.set (iter,
-                 0, source.get_icon ().get_pixbuf (),
+                 0, source.get_icon ().pixbuf,
                  1, source.get_name (),
-                 2, source.get_icon ().get_pixbuf ());
+                 2, null,
+                 3, source);
     }
 
+    /* bind model & store */
+    view.model = store;
+
     /* cell renderers */
-    view.insert_column_with_attributes (0, null, new Gtk.CellRendererPixbuf (), "pixbuf", 0);
-    view.insert_column_with_attributes (1, null, new Gtk.CellRendererText (), "text", 1);
-    view.insert_column_with_attributes (0, null, new Gtk.CellRendererPixbuf (), "pixbuf", 2);
+    col = new Gtk.TreeViewColumn.with_attributes (null, new Gtk.CellRendererPixbuf (), "pixbuf", 0);
+    col.set_min_width (32);
+    view.append_column (col);
+
+    view.insert_column_with_attributes (-1, null, new Gtk.CellRendererText (), "text", 1);
+    view.insert_column_with_attributes (-1, null, new Gtk.CellRendererPixbuf (), "pixbuf", 2);
   }
 
   private void setup_signals ()
   {
-    entry.changed.connect (()=>
+    entry.changed.connect (validate);
+    view.cursor_changed.connect (validate);
+
+    dialog.response.connect ((res)=>
     {
-      
+      /* create the list */
+      if (res == Gtk.ResponseType.OK)
+      {
+        List l;
+        DataSource source;
+        Value val;
+        Gtk.TreePath path;
+        Gtk.TreeIter iter;
+        Gtk.TreeViewColumn focus_column;
+
+        /* retrieve the selected source */
+        view.get_cursor (out path, out focus_column);
+
+        store.get_iter (out iter, path);
+        store.get_value (iter, 3, out val);
+        source = val as DataSource;
+
+        l = new List (-1, entry.text, source);
+        source.create_list (l);
+      }
+
+      dialog.close ();
     });
   }
 
   public void run ()
   {
     dialog.run ();
+  }
+
+  private void validate ()
+  {
+    Gtk.TreePath path;
+    Gtk.TreeViewColumn focus_column;
+    bool valid;
+
+    view.get_cursor (out path, out focus_column);
+
+    valid = (entry.text != "" && path != null);
+    dialog.set_response_sensitive (Gtk.ResponseType.OK, valid);
   }
 }
 

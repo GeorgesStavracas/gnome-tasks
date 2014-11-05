@@ -75,7 +75,7 @@ public class Manager : GLib.Object
 	  };
 
 	  overdue = new List (-1, _("Overdue"));
-	  done.filter = (t) => {
+	  overdue.filter = (t) => {
 	    Tasks.DateTime now;
 
 	    now = new Tasks.DateTime ();

@@ -27,6 +27,7 @@ public interface DataSource : GLib.Object
 {
 	public abstract string get_name ();
   public abstract string get_source_name ();
+  public abstract Gtk.Image get_icon ();
 
   public abstract void init ();
   public abstract void deinit ();

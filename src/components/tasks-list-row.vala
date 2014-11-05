@@ -28,7 +28,11 @@ public class ListRow : Gtk.ListBoxRow
   [GtkChild]
   private Gtk.Frame _color;
   [GtkChild]
+  public Gtk.Frame _counter_frame;
+  [GtkChild]
   private Gtk.Label _counter;
+  [GtkChild]
+  private Gtk.Frame _image_frame;
 
   /* Properties */
   public List list_;
@@ -45,7 +49,8 @@ public class ListRow : Gtk.ListBoxRow
         _counter.label = counter.to_string ();
       });
 
-      value.update_task_number ();
+      if (value.source != null)
+        _image_frame.add (value.source.get_icon ());
     }
   }
   public new string name

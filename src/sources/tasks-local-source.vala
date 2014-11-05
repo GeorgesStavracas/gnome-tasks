@@ -163,10 +163,37 @@ public class LocalSource : GLib.Object, Tasks.DataSource
     return _("Local source");
   }
 
+  public Gtk.Image get_icon ()
+  {
+    Gtk.Image icon;
+    icon = new Gtk.Image.from_icon_name ("computer-symbolic", Gtk.IconSize.MENU);
+    icon.show ();
+    icon.set_tooltip_text (this.get_name ());
+    return icon;
+  }
+
   public int count_tasks (List? l = null)
   {
-    message ("count_tasks STUB");
-    return 0;
+    string count_query = "SELECT COUNT(*) FROM 'Tasks'";
+    string error;
+    int rc, n_tasks;
+    Sqlite.Statement stmt;
+
+    if (l != null)
+      count_query +=  " WHERE list=%d".printf (l.id);
+
+    rc = database.prepare_v2 (count_query, -1, out stmt, null);
+    if (rc == Sqlite.OK)
+    {
+      critical (_("Cannot connect to database. Aborting."));
+      return 0;
+    }
+
+    /* It is certain that it has only 1 row with 1 column */
+    rc = stmt.step ();
+    n_tasks = stmt.column_int (0);
+
+    return n_tasks;
   }
 
   public int count_tasks_for_tag (Tag? tag = null)
@@ -209,8 +236,8 @@ public class LocalSource : GLib.Object, Tasks.DataSource
       switch (rc)
       {
         case Sqlite.DONE:
-          message ("Done");
           break;
+
         case Sqlite.ROW:
           id = stmt.column_int (0);
           name = stmt.column_text (1);
@@ -298,7 +325,31 @@ public class LocalSource : GLib.Object, Tasks.DataSource
 
   public void create_task (Task t)
   {
-    message ("create_task STUB");
+    string query = """INSERT INTO 'Task'
+        (name,parent,list,priority,description,due_date,completed)
+        VALUES
+        ('%s',%d,%d,%d,'%s','%s',0)""";
+    string error;
+    int rc, last_id;
+    Sqlite.Statement stmt;
+
+    /* Insert the task */
+    query = query.printf (t.name,
+                          t.parent != null ? t.parent.id : -1,
+                          t.list_id,
+                          t.priority,
+                          t.description,
+                          t.due.to_string ());
+
+
+    rc = database.exec (query, null, out error);
+
+    if (rc != Sqlite.OK)
+      return;
+
+    /* Update list ID field */
+    last_id = (int) database.last_insert_rowid ();
+    t.id = last_id;
   }
 
   public void update_task (Task t)

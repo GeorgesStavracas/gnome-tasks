@@ -24,7 +24,15 @@ namespace Tasks
 public class ListsDialog : Gtk.Dialog
 {
   [GtkChild]
+  private Gtk.Button add_button;
+  [GtkChild]
+  private Gtk.Button remove_button;
+  [GtkChild]
+  private Gtk.Button edit_button;
+  [GtkChild]
   private Gtk.HeaderBar headerbar;
+  [GtkChild]
+  private Gtk.ListBox lists_listbox;
 
   protected unowned Tasks.Application app;
 
@@ -32,6 +40,41 @@ public class ListsDialog : Gtk.Dialog
   {
     this.app = app;
     this.set_titlebar (headerbar);
+
+    setup_lists ();
+
+    lists_listbox.row_selected.connect (this.list_selected);
+    add_button.clicked.connect (this.create_button_clicked);
+  }
+
+  private void setup_lists ()
+  {
+    Manager manager;
+
+    manager = Manager.instance;
+    foreach (DataSource source in manager.sources)
+    {
+      foreach (List l in source.get_lists ())
+      {
+        ListRow row = new ListRow (l);
+        row._counter_frame.hide ();
+        lists_listbox.insert (row, -1);
+      }
+    }
+  }
+
+  private void list_selected (Gtk.ListBoxRow? row)
+  {
+    remove_button.sensitive = (row != null);
+    edit_button.sensitive = (row != null);
+  }
+
+  private void create_button_clicked ()
+  {
+    CreateListDialog dialog;
+
+    dialog = new CreateListDialog (app, this);
+    dialog.run ();
   }
 }
 

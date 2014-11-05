@@ -59,12 +59,12 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <child>
-                          <object class="GtkButton" id="create_button">
+                          <object class="GtkButton" id="add_button">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <child>
-                              <object class="GtkImage" id="image1">
+                              <object class="GtkImage" id="image3">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="icon_name">list-add-symbolic</property>
@@ -104,7 +104,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <child>
-                              <object class="GtkImage" id="image3">
+                              <object class="GtkImage" id="image4">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="icon_name">preferences-system-symbolic</property>
@@ -149,6 +149,7 @@
                       <object class="GtkListBox" id="lists_listbox">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="selection_mode">single</property>
                       </object>
                     </child>
                   </object>

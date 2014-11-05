@@ -93,6 +93,11 @@ public class DateTime : GLib.Object
 
     return 0;
   }
+
+  public string to_string (string format = "%Y-%m-%d %H:%M")
+  {
+    return base_time.format (format);
+  }
 }
 
 }

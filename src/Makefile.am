@@ -28,6 +28,7 @@ VALA_SOURCES = \
     backend/tasks-tag.vala \
     backend/tasks-task.vala \
     \
+    components/tasks-create-list-dialog.vala \
     components/tasks-list-row.vala \
     components/tasks-lists-dialog.vala \
     components/tasks-new-task-dialog.vala \
@@ -78,4 +79,5 @@ MAINTAINERCLEANFILES = \
 uninstall-local:
 	-rm -r $(uidir)
 	-rm -r $(pkgdatadir)
+
 

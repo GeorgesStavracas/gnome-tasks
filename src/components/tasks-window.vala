@@ -75,10 +75,7 @@ public class Window : Gtk.ApplicationWindow
     {
       foreach (List l in source.get_lists ())
       {
-        ListRow row;
-
-        row = new ListRow (l);
-        lists_listbox.insert (row, -1);
+        this.add_list (l);
       }
     }
   }
@@ -196,6 +193,7 @@ public class Window : Gtk.ApplicationWindow
     row = new ListRow (l);
     row.show ();
     lists_listbox.add (row);
+    row.list.update_task_number ();
   }
 
   /* Show lists dialog */

@@ -23,7 +23,7 @@ namespace Tasks
 public class Task : Tasks.BaseObject
 {
   public int list_id {get; set;}
-  public int priority {get; set;}
+  public int priority {get; set; default = 0;}
   public string? description {get; set; default="";}
   public bool done {get; set; default=false;}
   public unowned Tasks.Task? parent {get; set; default=null;}

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/apps/tasks/">
+    <file compressed="true">resources/create-list.ui</file>
     <file compressed="true">resources/editor.ui</file>
     <file compressed="true">resources/list-row.ui</file>
     <file compressed="true">resources/lists-dialog.ui</file>

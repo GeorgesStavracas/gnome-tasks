@@ -166,32 +166,72 @@ public class LocalSource : GLib.Object, Tasks.DataSource
   public Gtk.Image get_icon ()
   {
     Gtk.Image icon;
-    icon = new Gtk.Image.from_icon_name ("computer-symbolic", Gtk.IconSize.MENU);
-    icon.show ();
-    icon.set_tooltip_text (this.get_name ());
+    Gdk.Pixbuf pixbuf;
+    Gtk.IconTheme icon_theme;
+
+    icon_theme = Gtk.IconTheme.get_default ();
+
+    try
+    {
+      pixbuf = icon_theme.load_icon ("computer-symbolic", 24, Gtk.IconLookupFlags.FORCE_SYMBOLIC);
+
+      icon = new Gtk.Image.from_pixbuf (pixbuf);
+      icon.show ();
+      icon.set_tooltip_text (this.get_name ());
+    }
+    catch (Error error)
+    {
+      return new Gtk.Image ();
+    }
+
     return icon;
   }
 
   public int count_tasks (List? l = null)
   {
-    string count_query = "SELECT COUNT(*) FROM 'Tasks'";
     string error;
     int rc, n_tasks;
     Sqlite.Statement stmt;
 
-    if (l != null)
-      count_query +=  " WHERE list=%d".printf (l.id);
-
-    rc = database.prepare_v2 (count_query, -1, out stmt, null);
-    if (rc == Sqlite.OK)
+    /**
+     * If the list has an ID, it's not one of the
+     * special-threated lists, and an simple COUNT(*)
+     * handles it perfectly.
+     */
+    if (l.id >= 0)
     {
-      critical (_("Cannot connect to database. Aborting."));
-      return 0;
-    }
+      string count_query = "SELECT COUNT(*) FROM 'Task' WHERE list=%d".printf (l.id);
 
-    /* It is certain that it has only 1 row with 1 column */
-    rc = stmt.step ();
-    n_tasks = stmt.column_int (0);
+      rc = database.prepare_v2 (count_query, -1, out stmt, null);
+      if (rc != Sqlite.OK)
+      {
+        critical (_("Cannot connect to database. Aborting."));
+        return 0;
+      }
+
+      /* It is certain that it has only 1 row with 1 column */
+      rc = stmt.step ();
+      n_tasks = stmt.column_int (0);
+    }
+    else
+    {
+      /**
+       * When it is a special list, we have to get *ALL* the tasks
+       * and count them individually.
+       */
+      Gee.LinkedList<Task> tasks;
+
+      tasks = get_tasks (l);
+      n_tasks = 0;
+
+      message ("Counting for list %s", l.name);
+
+      foreach (Task t in tasks)
+      {
+        if (l.filter (t))
+          n_tasks++;
+      }
+    }
 
     return n_tasks;
   }
@@ -204,8 +244,69 @@ public class LocalSource : GLib.Object, Tasks.DataSource
 
   public Gee.LinkedList<Task> get_tasks (List? l = null)
   {
-    message ("get_tasks STUB");
-    return new Gee.LinkedList<Task> ();
+    Gee.LinkedList<Task> tasks;
+    int rc;
+    Sqlite.Statement stmt;
+    string query = "SELECT * FROM 'Task'";
+
+    if (l.id > -1)
+      query += " WHERE list=%d".printf (l.id);
+
+    tasks = new Gee.LinkedList<Task> ();
+
+    /* Select all lists available */
+    rc = database.prepare_v2 (query, -1, out stmt);
+    if (rc != Sqlite.OK)
+    {
+      critical (_("Cannot connect to database."));
+      return tasks;
+    }
+
+    /* Fetch data*/
+    do
+    {
+      Task t;
+      int id, parent, priority, list;
+      string name, description, dt;
+      bool done;
+
+      rc = stmt.step ();
+      switch (rc)
+      {
+        case Sqlite.DONE:
+          break;
+
+        case Sqlite.ROW:
+          id = stmt.column_int (0);
+          name = stmt.column_text (1);
+          parent = stmt.column_int (2);
+          list = stmt.column_int (3);
+          priority = stmt.column_int (4);
+          description = stmt.column_text (5);
+          done = (stmt.column_int (6) != 0);
+          dt = stmt.column_text (7);
+
+          /* Create and append list */
+          t = new Task (id, name, this);
+          t.priority = priority;
+          t.description = description;
+          t.done = done;
+          t.due.parse (dt);
+          t.list_id = list;
+
+          if (l.filter (t))
+            tasks.add (t);
+
+          break;
+
+        default:
+          message ("Error %s", database.errmsg ());
+          break;
+      }
+
+    } while (rc == Sqlite.OK);
+
+    return tasks;
   }
 
   public Gee.LinkedList<List> get_lists ()
@@ -260,7 +361,7 @@ public class LocalSource : GLib.Object, Tasks.DataSource
   public void create_list (List l)
   {
     string validator = "SELECT COUNT(*) FROM 'List' WHERE name='%s'";
-    string query = "INSERT INTO 'List' (name) VALUES (%s)";
+    string query = "INSERT INTO 'List' (name) VALUES ('%s')";
     string error;
     int rc, n_lists, last_id;
     Sqlite.Statement stmt;
@@ -269,7 +370,7 @@ public class LocalSource : GLib.Object, Tasks.DataSource
     validator = validator.printf (l.name);
 
     rc = database.prepare_v2 (validator, -1, out stmt, null);
-    if (rc == Sqlite.OK)
+    if (rc != Sqlite.OK)
     {
       critical (_("Cannot connect to database. Aborting."));
       return;
@@ -287,11 +388,15 @@ public class LocalSource : GLib.Object, Tasks.DataSource
 
     /* Now that the validation is done, we can insert the list */
     query = query.printf (l.name);
+    message ("%s", query);
 
     rc = database.exec (query, null, out error);
 
     if (rc != Sqlite.OK)
+    {
+      critical ("Error creating list.");
       return;
+    }
 
     /* Update list ID field */
     last_id = (int) database.last_insert_rowid ();

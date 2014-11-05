@@ -94,6 +94,25 @@ public class DateTime : GLib.Object
     return 0;
   }
 
+  public void parse (string datetime)
+  {
+		// String MUST be 'YYYY-MM-DD HH:mm'
+		if(datetime.index_of("-") < 0) return;
+		if(datetime.index_of(":") < 0) return;
+		if(datetime.index_of(" ") < 0) return;
+
+		string[] parts = datetime.split(" ");
+		string[] date = parts[0].split("-");
+		string[] time = parts[1].split(":");
+
+		this.year = int.parse(date[0]);
+		this.month = int.parse(date[1]);
+		this.day = int.parse(date[2]);
+
+		this.hour = int.parse(time[0]);
+		this.minute = int.parse(time[1]);
+  }
+
   public string to_string (string format = "%Y-%m-%d %H:%M")
   {
     return base_time.format (format);

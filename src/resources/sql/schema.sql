@@ -18,7 +18,7 @@ CREATE TABLE 'Task'
   parent      INTEGER NOT NULL,
   list        INTEGER NOT NULL,
   priority    INTEGER NOT NULL,
-  description  TEXT NOT NULL,
+  description TEXT NOT NULL,
   completed   INTEGER NOT NULL,
   due_date    DATETIME NOT NULL,
   FOREIGN KEY (parent) REFERENCES Task(id),

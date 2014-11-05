@@ -24,7 +24,7 @@ public delegate bool ListFilterFunc (Task task);
 
 public class List : Tasks.BaseObject
 {
-  public ListFilterFunc filter = default_filter;
+  public ListFilterFunc filter;
 
   /**
    * This signal is emmited when the source releases
@@ -37,6 +37,7 @@ public class List : Tasks.BaseObject
     this.id = id;
     this.name = name;
     this.source = source;
+    this.filter = default_filter;
   }
 
   public void update_task_number ()

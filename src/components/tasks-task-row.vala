@@ -45,6 +45,9 @@ public class TaskRow : Gtk.ListBoxRow
       task_ = value;
 
       _title.label = value.name;
+      _subtitle.label = value.description;
+      _end.label = value.due.to_string ();
+      _completed.active = value.done;
     }
   }
 

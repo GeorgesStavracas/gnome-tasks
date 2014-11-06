@@ -189,7 +189,6 @@ public class LocalSource : GLib.Object, Tasks.DataSource
 
   public int count_tasks (List? l = null)
   {
-    string error;
     int rc, n_tasks;
     Sqlite.Statement stmt;
 
@@ -436,7 +435,6 @@ public class LocalSource : GLib.Object, Tasks.DataSource
         ('%s',%d,%d,%d,'%s','%s',0)""";
     string error;
     int rc, last_id;
-    Sqlite.Statement stmt;
 
     /* Insert the task */
     query = query.printf (t.name,

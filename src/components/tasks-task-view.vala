@@ -24,29 +24,41 @@ namespace Tasks
 public class TaskView : Gtk.Grid
 {
   [GtkChild]
-  protected Gtk.EventBox title_eventbox;
-  [GtkChild]
-  protected Gtk.Stack stack1;
+  private Gtk.Entry title_entry;
 
-  public TaskView ()
+  private unowned Task _task;
+  public unowned Task task
   {
-  	connect_signals ();
+    set {
+      
+      _task = value;
+      title_entry.text = value.name;
+    }
+
+    get {
+      return _task;
+    }
+  }
+
+  construct
+  {
+    title_entry.get_style_context ().remove_class ("entry");
+    connect_signals ();
   }
 
   private void connect_signals ()
   {
-    title_eventbox.button_press_event.connect(on_eventbox_button_press);
-  }
+    title_entry.focus_in_event.connect (()=>
+    {
+      title_entry.get_style_context ().add_class ("entry");
+      return false;
+    });
 
-  private bool on_eventbox_button_press (Gdk.EventButton button)
-  {
-    message("press event");
-    if (stack1.visible_child_name == "title-label")
-      stack1.visible_child_name = "title-entry";
-    else
-      stack1.visible_child_name = "title-label";
-
-    return false;
+    title_entry.focus_out_event.connect (()=>
+    {
+      title_entry.get_style_context ().remove_class ("entry");
+      return false;
+    });
   }
 }
 

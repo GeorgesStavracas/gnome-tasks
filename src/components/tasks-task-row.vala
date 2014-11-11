@@ -32,7 +32,7 @@ public class TaskRow : Gtk.ListBoxRow
   [GtkChild]
   private Gtk.Label _subtitle;
 
-  private unowned Task task_;
+  private Task task_;
   public Task task
   {
     get

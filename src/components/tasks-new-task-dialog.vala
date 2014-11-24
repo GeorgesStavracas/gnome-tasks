@@ -117,9 +117,6 @@ public class NewTaskDialog : Gtk.Dialog
     /* Fill the sources menu */
     foreach (DataSource source in sources)
     {
-      /* FIXME: should add something like 'source.support_listless_task ()' */
-      add_source_entry (menu, source);
-
       foreach (Tasks.List list in source.get_lists ())
         add_source_entry (menu, source, list);
     }
@@ -187,13 +184,14 @@ public class NewTaskDialog : Gtk.Dialog
       {
         this.selected_list = l;
       }
-
+/*
       var tasks = this.selected_source.get_tasks (l);
 
       foreach (Task t in tasks)
       {
-        /* TODO: populate parent list */
+        
       }
+*/
     }
   }
 

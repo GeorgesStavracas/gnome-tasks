@@ -45,6 +45,8 @@ public class Window : Gtk.ApplicationWindow
   public Gtk.Button new_task_button;
   [GtkChild]
   public Gtk.Stack stack1;
+  [GtkChild]
+  private TaskView task_view;
 
   protected unowned Tasks.Application app;
 
@@ -98,6 +100,11 @@ public class Window : Gtk.ApplicationWindow
 
   private void set_task (Gtk.ListBoxRow? obj)
   {
+    TaskRow row;
+
+    row = obj as TaskRow;
+    task_view.task = row.task;
+
     back_button.visible = true;
     stack1.visible_child_name = "details";
   }

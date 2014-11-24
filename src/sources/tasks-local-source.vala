@@ -223,8 +223,6 @@ public class LocalSource : GLib.Object, Tasks.DataSource
       tasks = get_tasks (l);
       n_tasks = 0;
 
-      message ("Counting for list %s", l.name);
-
       foreach (Task t in tasks)
       {
         if (l.filter (t))
@@ -262,48 +260,33 @@ public class LocalSource : GLib.Object, Tasks.DataSource
     }
 
     /* Fetch data*/
-    do
+    while (stmt.step () == Sqlite.ROW)
     {
       Task t;
       int id, parent, priority, list;
       string name, description, dt;
       bool done;
 
-      rc = stmt.step ();
-      switch (rc)
-      {
-        case Sqlite.DONE:
-          break;
+      id = stmt.column_int (0);
+      name = stmt.column_text (1);
+      parent = stmt.column_int (2);
+      list = stmt.column_int (3);
+      priority = stmt.column_int (4);
+      description = stmt.column_text (5);
+      done = (stmt.column_int (6) != 0);
+      dt = stmt.column_text (7);
 
-        case Sqlite.ROW:
-          id = stmt.column_int (0);
-          name = stmt.column_text (1);
-          parent = stmt.column_int (2);
-          list = stmt.column_int (3);
-          priority = stmt.column_int (4);
-          description = stmt.column_text (5);
-          done = (stmt.column_int (6) != 0);
-          dt = stmt.column_text (7);
+      /* Create and append list */
+      t = new Task (id, name, this);
+      t.priority = priority;
+      t.description = description;
+      t.done = done;
+      t.due.parse (dt);
+      t.list_id = list;
 
-          /* Create and append list */
-          t = new Task (id, name, this);
-          t.priority = priority;
-          t.description = description;
-          t.done = done;
-          t.due.parse (dt);
-          t.list_id = list;
-
-          if (l.filter (t))
-            tasks.add (t);
-
-          break;
-
-        default:
-          message ("Error %s", database.errmsg ());
-          break;
-      }
-
-    } while (rc == Sqlite.OK);
+      if (l.filter (t))
+        tasks.add (t);
+    }
 
     return tasks;
   }
@@ -326,33 +309,19 @@ public class LocalSource : GLib.Object, Tasks.DataSource
     }
 
     /* Fetch data*/
-    do
+    while (stmt.step () == Sqlite.ROW)
     {
       List l;
       int id;
       string name;
 
-      rc = stmt.step ();
-      switch (rc)
-      {
-        case Sqlite.DONE:
-          break;
+      id = stmt.column_int (0);
+      name = stmt.column_text (1);
 
-        case Sqlite.ROW:
-          id = stmt.column_int (0);
-          name = stmt.column_text (1);
-
-          /* Create and append list */
-          l = new List (id, name, this);
-          lists.add (l);
-          break;
-
-        default:
-          message ("Error %s", database.errmsg ());
-          break;
-      }
-
-    } while (rc == Sqlite.OK);
+      /* Create and append list */
+      l = new List (id, name, this);
+      lists.add (l);
+    }
 
     return lists;
   }

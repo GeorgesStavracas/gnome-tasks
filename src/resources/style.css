@@ -28,3 +28,20 @@ GtkScrolledWindow .scrollbar.trough {
   font-size: small;
   opacity: 0.75;
 }
+
+/* Task priorities */
+.high {
+  background-color: #FF2222;
+}
+
+.normal {
+  background-color: #FFFFFF;
+}
+
+.low {
+  background-color: #8888FF;
+}
+
+.none {
+  background-color: rgba(255, 255, 255, 0.0);
+}

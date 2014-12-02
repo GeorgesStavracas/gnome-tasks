@@ -8,6 +8,7 @@ Tasks
 - Document the database schema
 - Plan indexes (if any)
 - Write unit tests
+- Add support for database signals
 
 ### Plugins
 - Define a default interface for plugins

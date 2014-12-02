@@ -47,6 +47,8 @@ public class Window : Gtk.ApplicationWindow
   public Gtk.Stack stack1;
   [GtkChild]
   private TaskView task_view;
+  [GtkChild]
+  private Gtk.SearchBar searchbar;
 
   protected unowned Tasks.Application app;
 
@@ -96,6 +98,11 @@ public class Window : Gtk.ApplicationWindow
     lists_listbox.row_selected.connect (this.set_list);
     back_button.clicked.connect (this.on_back_button_clicked);
     new_task_button.clicked.connect (this.on_new_task_button_clicked);
+
+    this.key_press_event.connect ((event)=>
+    {
+      return searchbar.handle_event (event);
+    });
   }
 
   private void set_task (Gtk.ListBoxRow? obj)

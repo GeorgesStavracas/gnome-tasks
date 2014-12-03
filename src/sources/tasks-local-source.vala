@@ -495,9 +495,13 @@ public class LocalSource : GLib.Object, Tasks.DataSource
   public void update_task (Task t)
   {
     string query = """UPDATE 'Task' SET
-      (name,parent,list,priority,description,due_date,completed)
-      VALUES
-      ('%s',%d,%d,%d,'%s','%s',%d)
+      name='%s',
+      parent=%d,
+      list=%d,
+      priority=%d,
+      description='%s',
+      due_date='%s',
+      completed=%d
       WHERE id=%d
     """;
     string error;

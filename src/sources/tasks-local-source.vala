@@ -235,7 +235,10 @@ public class LocalSource : GLib.Object, Tasks.DataSource
 
   public int count_tasks_for_tag (Tag? tag = null)
   {
-    message ("count_tasks_for_tag STUB");
+    /**
+     * Cannot count right now
+     */
+
     return 0;
   }
 
@@ -373,27 +376,92 @@ public class LocalSource : GLib.Object, Tasks.DataSource
 
   public void update_list (List l)
   {
-    message ("update_list STUB");
+    string query = "UPDATE 'List' SET (name) VALUES ('%s') WHERE id=%d";
+    string error;
+    int rc;
+
+    query = query.printf (l.name, l.id);
+    message ("%s", query);
+
+    rc = database.exec (query, null, out error);
+
+    if (rc != Sqlite.OK)
+    {
+      critical ("Error updating list.");
+      return;
+    }
+
   }
 
   public void remove_list (List l)
   {
-    message ("remove_list STUB");
+    string error;
+    int rc;
+    string query = "DELETE FROM List WHERE id='%d'";
+
+    query = query.printf (l.id);
+		rc = database.exec (query, null, out error);
+
+		if (rc != Sqlite.OK) {
+      critical ("Error removing list.");
+      return;
+		}
   }
 
   public void create_tag (Tag t)
   {
-    message ("create_tag STUB");
+    string query = "INSERT INTO 'Tag' (name) VALUES ('%s')";
+    string error;
+    int rc, last_id;
+
+    query = query.printf (t.name);
+    message ("%s", query);
+
+    rc = database.exec (query, null, out error);
+
+    if (rc != Sqlite.OK)
+    {
+      critical ("Error creating tag.");
+      return;
+    }
+
+    /* Update list ID field */
+    last_id = (int) database.last_insert_rowid ();
+    t.id = last_id;
   }
 
   public void update_tag (Tag t)
   {
-    message ("update_tag STUB");
+    string query = "UPDATE 'Tag' SET (name,color) VALUES ('%s','%s') WHERE id=%d";
+    string error;
+    int rc;
+
+    query = query.printf (t.name, t.color.to_string (), t.id);
+    message ("%s", query);
+
+    rc = database.exec (query, null, out error);
+
+    if (rc != Sqlite.OK)
+    {
+      critical ("Error updating tag.");
+      return;
+    }
+
   }
 
   public void remove_tag (Tag t)
   {
-    message ("remove_tag STUB");
+    string error;
+    int rc;
+    string query = "DELETE FROM Tag WHERE id='%d'";
+
+    query = query.printf (t.id);
+		rc = database.exec (query, null, out error);
+
+		if (rc != Sqlite.OK) {
+      critical ("Error removing tag.");
+      return;
+		}
   }
 
   public void create_task (Task t)
@@ -426,12 +494,46 @@ public class LocalSource : GLib.Object, Tasks.DataSource
 
   public void update_task (Task t)
   {
-    message ("update_task STUB");
+    string query = """UPDATE 'Task' SET
+      (name,parent,list,priority,description,due_date,completed)
+      VALUES
+      ('%s',%d,%d,%d,'%s','%s',%d)
+      WHERE id=%d
+    """;
+    string error;
+    int rc;
+
+    query = query.printf (t.name,
+                          t.parent != null ? t.parent.id : -1,
+                          t.list_id,
+                          t.priority,
+                          t.description,
+                          t.due.to_string (),
+                          t.done? 1 : 0,
+                          t.id);
+    message ("%s", query);
+
+    rc = database.exec (query, null, out error);
+
+    if (rc != Sqlite.OK)
+    {
+      critical ("Error updating task.");
+      return;
+    }
   }
 
   public void remove_task (Task t)
   {
-    message ("remove_task STUB");
+    string error;
+    int rc;
+    string query = "DELETE FROM Task WHERE id='%d'";
+
+    query = query.printf (t.id);
+		rc = database.exec (query, null, out error);
+		if (rc != Sqlite.OK) {
+      critical ("Error removing task.");
+      return;
+		}
   }
 }
 

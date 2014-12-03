@@ -101,6 +101,9 @@ public class Window : Gtk.ApplicationWindow
 
     this.key_press_event.connect ((event)=>
     {
+      if (stack1.visible_child_name == "details")
+        return false;
+
       return searchbar.handle_event (event);
     });
   }
@@ -153,6 +156,7 @@ public class Window : Gtk.ApplicationWindow
 
   private void on_back_button_clicked ()
   {
+    task_view.task.source.update_task (task_view.task);
     new_task_button.visible = true;
     stack1.visible_child_name = "tasks";
   }

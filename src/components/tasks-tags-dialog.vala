@@ -1,6 +1,6 @@
 /* -*- Mode: Vala; indent-tabs-mode: c; c-basic-offset: 2; tab-width: 2 -*-  */
 /*
- * tasks-list-row.c
+ * tasks-lists-dialog.c
  * Copyright (C) 2014 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  * 
  * Tasks is free software: you can redistribute it and/or modify it
@@ -20,49 +20,18 @@
 namespace Tasks
 {
 
-[GtkTemplate (ui = "/apps/tasks/resources/task-view.ui")]
-public class TaskView : Gtk.Grid
+[GtkTemplate (ui = "/apps/tasks/resources/tags-dialog.ui")]
+public class TagsDialog : Gtk.Dialog
 {
   [GtkChild]
-  private Gtk.Entry title_entry;
+  private Gtk.HeaderBar headerbar;
 
-  private unowned Task _task;
-  public unowned Task task
+  protected unowned Tasks.Application app;
+
+  public TagsDialog (Tasks.Application app)
   {
-    set {
-      
-      _task = value;
-      title_entry.text = value.name;
-    }
-
-    get {
-      return _task;
-    }
-  }
-
-  construct
-  {
-    title_entry.get_style_context ().remove_class ("entry");
-    connect_signals ();
-  }
-
-  private void connect_signals ()
-  {
-    title_entry.changed.connect (()=>{
-      _task.name = title_entry.text;
-    });
-
-    title_entry.focus_in_event.connect (()=>
-    {
-      title_entry.get_style_context ().add_class ("entry");
-      return false;
-    });
-
-    title_entry.focus_out_event.connect (()=>
-    {
-      title_entry.get_style_context ().remove_class ("entry");
-      return false;
-    });
+    this.app = app;
+    this.set_titlebar (headerbar);
   }
 }
 
